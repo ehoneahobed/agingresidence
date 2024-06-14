@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "name": "Independent Living",
+      "slug": "independent-living",
+      "description": "Independent living communities offer a vibrant, maintenance-free lifestyle for active seniors.",
+      "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": 2,
+      "name": "Assisted Living",
+      "slug": "assisted-living",
+      "description": "Assisted living communities provide help with daily activities while encouraging independence.",
+      "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": 3,
+      "name": "Memory Care",
+      "slug": "memory-care",
+      "description": "Memory care communities offer specialized care for seniors with Alzheimer's or dementia.",
+      "image": "https://placehold.co/600x400"
+    },
+    {
+      "id": 4,
+      "name": "Skilled Nursing",
+      "slug": "skilled-nursing",
+      "description": "Skilled nursing facilities provide 24-hour medical care and rehabilitation services.",
+      "image": "https://placehold.co/600x400"
+    }
+  ]
+  

@@ -1,0 +1,99 @@
+[
+    {
+      "slug": "edelweiss-assisted-living",
+      "name": "Edelweiss Assisted Living",
+      "phone": "(857) 547-2000",
+      "views": 57,
+      "state": "MA",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Edelweiss Assisted Living</strong> offers a comfortable and secure environment for seniors, providing a variety of services and amenities tailored to meet their unique needs.</p><h2>About Us</h2><p>Our facility is designed to provide a home-like atmosphere with modern conveniences and compassionate care. Located in the heart of Massachusetts, we are committed to enhancing the quality of life for our residents.</p><ul><li>24/7 medical support</li><li>Nutritious meals prepared by professional chefs</li><li>Daily social and recreational activities</li><li>Housekeeping and laundry services</li></ul><h2>Our Services</h2><p>At Edelweiss Assisted Living, we offer a range of services to ensure our residents live comfortably and happily:</p><h3>Personal Care</h3><p>We provide personalized care plans to meet the specific needs of each resident, including assistance with daily activities such as bathing, dressing, and medication management.</p><h3>Health and Wellness</h3><p>Our on-site healthcare professionals are available around the clock to provide medical care and support, ensuring our residents receive the best possible health services.</p><blockquote><p>&quot;The staff at Edelweiss Assisted Living are like family. They go above and beyond to make sure we are happy and healthy.&quot; - Resident's family member</p></blockquote><h3>Engaging Activities</h3><p>We offer a variety of activities to keep our residents active and engaged, including:</p><ul><li>Arts and crafts</li><li>Fitness classes</li><li>Music and dance</li><li>Group outings and excursions</li></ul><p>Our goal is to create a vibrant community where residents can enjoy their golden years with dignity and joy. For more information or to schedule a tour, please <a href='mailto:info@edelweissassistedliving.com'>contact us</a> or call us at (857) 547-2000.</p>",
+      "location": {
+        "latitude": 42.3601,
+        "longitude": -71.0589
+      },
+      "categorySlug": "assisted-living"
+    },
+    {
+      "slug": "golden-years-assisted-living",
+      "name": "Golden Years Assisted Living",
+      "phone": "(409) 745-9096",
+      "views": 30,
+      "state": "TX",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Golden Years Assisted Living</strong> provides personalized care and support for seniors. Our facility offers a warm, home-like atmosphere with modern amenities and professional care services.</p>",
+      "location": {
+        "latitude": 29.7604,
+        "longitude": -95.3698
+      },
+      "categorySlug": "assisted-living"
+    },
+    {
+      "slug": "glencroft-senior-living",
+      "name": "Glencroft Senior Living",
+      "phone": "(623) 939-9475",
+      "views": 32,
+      "state": "AZ",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Glencroft Senior Living</strong> offers a vibrant community and comprehensive services to help seniors live their best lives.</p>",
+      "location": {
+        "latitude": 33.4484,
+        "longitude": -112.0740
+      },
+      "categorySlug": "independent-living"
+    },
+    {
+      "slug": "tanner-terrace-apartments",
+      "name": "Tanner Terrace Apartments",
+      "phone": "(623) 939-9447",
+      "views": 25,
+      "state": "AZ",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Tanner Terrace Apartments</strong> provide a friendly and safe environment for seniors, offering a range of amenities and services to ensure comfort and well-being.</p>",
+      "location": {
+        "latitude": 33.4484,
+        "longitude": -112.0740
+      },
+      "categorySlug": "independent-living"
+    },
+    {
+      "slug": "glencroft-center-for-modern-aging",
+      "name": "Glencroft Center for Modern Aging",
+      "phone": "(623) 939-9475",
+      "views": 42,
+      "state": "AZ",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Glencroft Center for Modern Aging</strong> offers innovative and comprehensive senior care, providing a range of services to meet the needs of our residents.</p>",
+      "location": {
+        "latitude": 33.4484,
+        "longitude": -112.0740
+      },
+      "categorySlug": "skilled-nursing"
+    },
+    {
+      "slug": "holiday-westgate-village",
+      "name": "Holiday Westgate Village",
+      "phone": "(623) 233-0425",
+      "views": 20,
+      "state": "AZ",
+      "image": "https://placehold.co/600x400",
+      "gallery": ["https://placehold.co/600x400", "https://placehold.co/600x400"],
+      "popular": true,
+      "description": "<p><strong>Holiday Westgate Village</strong> is a vibrant and welcoming senior community, offering a range of services and amenities to ensure our residents live comfortably and happily.</p>",
+      "location": {
+        "latitude": 33.4484,
+        "longitude": -112.0740
+      },
+      "categorySlug": "memory-care"
+    }
+  ]
+  

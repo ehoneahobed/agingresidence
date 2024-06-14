@@ -1,7 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
 import NavBar from "@/components/custom/NavBar";
 import Footer from "@/components/custom/Footer";
+import "leaflet/dist/leaflet.css";
 
 interface Listing {
   slug: string;
@@ -13,6 +17,10 @@ interface Listing {
   gallery: string[];
   popular: boolean;
   description: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 }
 
 const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
@@ -104,6 +112,19 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
                     <img className="w-full h-64 object-cover rounded-lg" src={image} alt={`${listing.name} gallery image ${index + 1}`} />
                   </div>
                 ))}
+              </div>
+              <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-4">Location</h2>
+                <MapContainer center={[listing.location.latitude, listing.location.longitude]} zoom={13} className="w-full h-64 rounded-lg">
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  />
+                  <Marker position={[listing.location.latitude, listing.location.longitude]}>
+                    <Popup>
+                      {listing.name}
+                    </Popup>
+                  </Marker>
+                </MapContainer>
               </div>
             </div>
             <div>
