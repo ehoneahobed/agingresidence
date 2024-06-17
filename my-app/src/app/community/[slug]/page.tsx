@@ -6,6 +6,7 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import NavBar from "@/components/custom/NavBar";
 import Footer from "@/components/custom/Footer";
 import "leaflet/dist/leaflet.css";
+import Image from "next/image";
 
 interface Listing {
   slug: string;
@@ -13,15 +14,33 @@ interface Listing {
   phone: string;
   views: number;
   state: string;
-  featuredImage: string;
+  image: string;
   gallery: string[];
   popular: boolean;
   description: string;
+  rating: number;
+  website: string;
+  operatingHours: string;
+  tags: string[];
   location: {
     latitude: number;
     longitude: number;
+    address: string;
   };
 }
+
+const renderStars = (rating: number) => {
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    stars.push(
+      <svg key={i} className={`h-5 w-5 ${i <= rating ? "text-yellow-400" : "text-gray-300"}`} fill="currentColor" viewBox="0 0 20 20">
+        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.715 5.287a1 1 0 00.95.69h5.534c.969 0 1.371 1.24.588 1.81l-4.485 3.253a1 1 0 00-.364 1.118l1.715 5.287c.3.921-.755 1.688-1.538 1.118l-4.485-3.253a1 1 0 00-1.176 0l-4.485 3.253c-.783.57-1.838-.197-1.538-1.118l1.715-5.287a1 1 0 00-.364-1.118L2.073 9.714c-.783-.57-.381-1.81.588-1.81h5.534a1 1 0 00.95-.69l1.715-5.287z" />
+      </svg>
+    );
+  }
+  return stars;
+};
+
 
 const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
   const [listing, setListing] = useState<Listing | null>(null);
@@ -33,12 +52,14 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
   useEffect(() => {
     const fetchListing = async () => {
       try {
-        // Simulating fetching the listing data from the JSON file
-        const res = await fetch("/listing.json");
+        const res = await fetch(`/api/listings/${slug}`);
         if (!res.ok) {
           throw new Error("Listing not found");
         }
         const data: Listing = await res.json();
+        // Parse JSON fields
+        data.gallery = JSON.parse(data.gallery as unknown as string);
+        data.tags = JSON.parse(data.tags as unknown as string);
         setListing(data);
       } catch (error: any) {
         setError(error.message);
@@ -99,8 +120,42 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              <img className="w-full h-64 object-cover rounded-lg" src={listing.featuredImage} alt={listing.name} />
+              {/* <img className="w-full h-64 object-cover rounded-lg" src={listing.featuredImage} alt={listing.name} /> */}
+              {/* <div className="relative w-full h-64">
+                <Image className=" rounded-lg" src={listing.image} alt={listing.name} layout="fill" objectFit="cover" />
+                <img className="w-full h-64 object-cover rounded-lg" src={listing.image} alt="" />
+              
+              </div> */}
+
+<div className="relative w-full h-64">
+                <Image
+                  className="rounded-lg"
+                  loader={()=>listing.image}
+                  src={listing.image}
+                  alt={listing.name}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              </div>
+
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
+              {/* <p className="text-lg text-gray-600 mt-2">Rating: {listing.rating} / 5</p> */}
+              <div className="flex items-center mt-2">
+                {listing.rating ? (
+                  <>
+                    {renderStars(listing.rating)}
+                    <span className="ml-2 text-lg text-gray-600">{listing.rating} / 5</span>
+                  </>
+                ) : (
+                  <span className="text-lg text-gray-600">No ratings yet</span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center mt-2">
+                {listing.tags.map((tag, index) => (
+                  <span key={index} className="bg-teal-100 text-teal-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">{tag}</span>
+                ))}
+              </div>
               <div
                 className="prose prose-lg mt-4 text-gray-600"
                 dangerouslySetInnerHTML={{ __html: listing.description }}
@@ -113,8 +168,17 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
                   </div>
                 ))}
               </div>
+
               <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-4">Location</h2>
+                <h2 className="text-2xl font-bold mb-4">Contact Information for {listing.name} </h2>
+                <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Website:</span> <a href={listing.website} className="text-teal-500 hover:underline">{listing.website}</a></p>
+              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Phone:</span> {listing.phone}</p>
+              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Address:</span> {listing.location.address}</p>
+              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Operating Hours:</span> {listing.operatingHours}</p>
+              </div>
+
+              <div className="mt-8">
+                <h2 className="text-2xl font-bold mb-4">Location for {listing.name}</h2>
                 <MapContainer center={[listing.location.latitude, listing.location.longitude]} zoom={13} className="w-full h-64 rounded-lg">
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -43,25 +43,24 @@ const CategoryListingsPage: React.FC<{ params: { slug: string } }> = ({ params }
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (slug) {
-      const fetchListings = async () => {
-        try {
-          const res = await fetch("/listings.json");
-          if (!res.ok) {
-            throw new Error("Failed to fetch listings");
-          }
-          const data: Listing[] = await res.json();
-          const filteredListings = data.filter(listing => listing.categorySlug === slug);
-          setListings(filteredListings);
-        } catch (error: any) {
-          setError(error.message);
-        } finally {
-          setLoading(false);
-        }
-      };
+    if (!slug) return;
 
-      fetchListings();
-    }
+    const fetchListings = async () => {
+      try {
+        const res = await fetch(`/api/categories/${slug}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch listings');
+        }
+        const data = await res.json();
+        setListings(data);
+      } catch (error:any) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchListings();
   }, [slug]);
 
   if (loading) {
@@ -100,7 +99,7 @@ const CategoryListingsPage: React.FC<{ params: { slug: string } }> = ({ params }
           <h1 className="text-3xl font-extrabold text-gray-900 mb-8">{slug} Listings</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {listings.map((listing) => (
-              <Link key={listing.id} href={`community/${listing.slug}`}>
+              <Link key={listing.id} href={`/community/${listing.slug}`}>
                 <div className="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                   <img className="w-full h-40 object-cover rounded-lg" src={listing.image} alt={listing.name} />
                   <h2 className="text-2xl font-bold text-gray-900 mt-4">{listing.name}</h2>

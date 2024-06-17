@@ -18,7 +18,7 @@ model Category {
   id Int @id @default(autoincrement())
   name String
   slug String @unique
-  description String?
+  description String?  @db.Text
   image String?
   listings Listing[]
 
@@ -51,7 +51,7 @@ model Listing {
   state         String
   image         String
   gallery       Json
-  description   String?
+  description   String?   @db.Text
   rating        Float?
   website       String?
   operatingHours String?

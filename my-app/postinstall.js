@@ -16,6 +16,18 @@ if (platform === 'win32') {
       return;
     }
     console.log(`stdout: ${stdout}`);
+    // Run prisma generate after uninstall
+    exec('npx prisma generate', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error running prisma generate: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
   });
 } else {
   // Remove Windows-specific package on non-Windows platforms
@@ -29,5 +41,17 @@ if (platform === 'win32') {
       return;
     }
     console.log(`stdout: ${stdout}`);
+    // Run prisma generate after uninstall
+    exec('npx prisma generate', (error, stdout, stderr) => {
+      if (error) {
+        console.error(`Error running prisma generate: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        return;
+      }
+      console.log(`stdout: ${stdout}`);
+    });
   });
 }
