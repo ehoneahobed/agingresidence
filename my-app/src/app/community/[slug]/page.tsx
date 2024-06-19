@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet-defaulticon-compatibility';
 import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css';
-import NavBar from "@/components/custom/NavBar";
-import Footer from "@/components/custom/Footer";
+import NavBar from '@/components/custom/NavBar';
+import Footer from '@/components/custom/Footer';
 import "leaflet/dist/leaflet.css";
-import Image from "next/image";
+import Image from 'next/image';
 
 interface Listing {
   slug: string;
@@ -15,13 +16,13 @@ interface Listing {
   views: number;
   state: string;
   image: string;
-  gallery: string[];
+  gallery: string; // Update gallery to string
   popular: boolean;
   description: string;
   rating: number;
   website: string;
   operatingHours: string;
-  tags: string[];
+  tags: string; // Update tags to string
   location: {
     latitude: number;
     longitude: number;
@@ -29,37 +30,27 @@ interface Listing {
   };
 }
 
-const renderStars = (rating: number) => {
-  const stars = [];
-  for (let i = 1; i <= 5; i++) {
-    stars.push(
-      <svg key={i} className={`h-5 w-5 ${i <= rating ? "text-yellow-400" : "text-gray-300"}`} fill="currentColor" viewBox="0 0 20 20">
-        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.715 5.287a1 1 0 00.95.69h5.534c.969 0 1.371 1.24.588 1.81l-4.485 3.253a1 1 0 00-.364 1.118l1.715 5.287c.3.921-.755 1.688-1.538 1.118l-4.485-3.253a1 1 0 00-1.176 0l-4.485 3.253c-.783.57-1.838-.197-1.538-1.118l1.715-5.287a1 1 0 00-.364-1.118L2.073 9.714c-.783-.57-.381-1.81.588-1.81h5.534a1 1 0 00.95-.69l1.715-5.287z" />
-      </svg>
-    );
-  }
-  return stars;
-};
-
-
-const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
+const SingleListing: React.FC = () => {
+  const { slug } = useParams();
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const { slug } = params;
-
   useEffect(() => {
+    if (typeof slug !== 'string') {
+      return;
+    }
+
     const fetchListing = async () => {
       try {
         const res = await fetch(`/api/listings/${slug}`);
         if (!res.ok) {
-          throw new Error("Listing not found");
+          throw new Error('Failed to fetch listing');
         }
         const data: Listing = await res.json();
-        // Parse JSON fields
-        data.gallery = JSON.parse(data.gallery as unknown as string);
+        // Parse the tags and gallery fields
         data.tags = JSON.parse(data.tags as unknown as string);
+        data.gallery = JSON.parse(data.gallery as unknown as string);
         setListing(data);
       } catch (error: any) {
         setError(error.message);
@@ -72,45 +63,15 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
   }, [slug]);
 
   if (loading) {
-    return (
-      <div>
-        <NavBar />
-        <main className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Loading...</h1>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <p>Loading...</p>;
   }
 
   if (error) {
-    return (
-      <div>
-        <NavBar />
-        <main className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 text-center">{error}</h1>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <p>{error}</p>;
   }
 
   if (!listing) {
-    return (
-      <div>
-        <NavBar />
-        <main className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Listing Not Found</h1>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
+    return <p>Listing not found</p>;
   }
 
   return (
@@ -120,14 +81,8 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
-              {/* <img className="w-full h-64 object-cover rounded-lg" src={listing.featuredImage} alt={listing.name} /> */}
-              {/* <div className="relative w-full h-64">
-                <Image className=" rounded-lg" src={listing.image} alt={listing.name} layout="fill" objectFit="cover" />
-                <img className="w-full h-64 object-cover rounded-lg" src={listing.image} alt="" />
-              
-              </div> */}
-
-<div className="relative w-full h-64">
+              <div className="relative w-full h-64">
+                {/* <Image className="w-full h-64 object-cover rounded-lg" src={listing.featuredImage} alt={listing.name} /> */}
                 <Image
                   className="rounded-lg"
                   loader={()=>listing.image}
@@ -136,23 +91,27 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
                   layout="fill"
                   objectFit="cover"
                 />
+              
               </div>
-
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
-              {/* <p className="text-lg text-gray-600 mt-2">Rating: {listing.rating} / 5</p> */}
               <div className="flex items-center mt-2">
-                {listing.rating ? (
-                  <>
-                    {renderStars(listing.rating)}
-                    <span className="ml-2 text-lg text-gray-600">{listing.rating} / 5</span>
-                  </>
-                ) : (
-                  <span className="text-lg text-gray-600">No ratings yet</span>
-                )}
+                <p className="text-lg text-gray-600 mt-2">Rating: {listing.rating || 'No ratings yet'} / 5</p>
+                <div className="flex items-center ml-4">
+                  {Array.from({ length: 5 }).map((_, index) => (
+                    <svg
+                      key={index}
+                      className={`w-5 h-5 ${index < listing.rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M9.049.906a1 1 0 011.902 0l1.4 3.583a1 1 0 00.95.691h3.794a1 1 0 01.591 1.81l-3.067 2.41a1 1 0 00-.342 1.11l1.25 3.42a1 1 0 01-1.544 1.154l-3.008-2.06a1 1 0 00-1.13 0L5.06 14.084a1 1 0 01-1.544-1.154l1.25-3.42a1 1 0 00-.342-1.11L1.357 6.99a1 1 0 01.591-1.81h3.794a1 1 0 00.95-.691L8.092.906z" />
+                    </svg>
+                  ))}
+                </div>
               </div>
-
               <div className="flex flex-wrap items-center mt-2">
-                {listing.tags.map((tag, index) => (
+                {Array.isArray(listing.tags) && listing.tags.map((tag, index) => (
                   <span key={index} className="bg-teal-100 text-teal-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">{tag}</span>
                 ))}
               </div>
@@ -162,23 +121,21 @@ const SingleListing: React.FC<{ params: { slug: string } }> = ({ params }) => {
               />
               <div className="flex flex-wrap -mx-2 mt-6">
                 <h2 className="w-full text-2xl font-bold mb-4">Gallery</h2>
-                {listing.gallery.map((image, index) => (
+                {Array.isArray(listing.gallery) && listing.gallery.map((image, index) => (
                   <div key={index} className="w-full sm:w-1/2 lg:w-1/3 px-2 mb-4">
                     <img className="w-full h-64 object-cover rounded-lg" src={image} alt={`${listing.name} gallery image ${index + 1}`} />
                   </div>
                 ))}
               </div>
-
               <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-4">Contact Information for {listing.name} </h2>
+                <h2 className="text-2xl font-bold mb-4">Contact Information</h2>
                 <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Website:</span> <a href={listing.website} className="text-teal-500 hover:underline">{listing.website}</a></p>
-              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Phone:</span> {listing.phone}</p>
-              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Address:</span> {listing.location.address}</p>
-              <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Operating Hours:</span> {listing.operatingHours}</p>
+                <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Phone:</span> {listing.phone}</p>
+                <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Address:</span> {listing.location.address}</p>
+                <p className="text-lg text-gray-600 mt-2"><span className="font-bold">Operating Hours:</span> {listing.operatingHours}</p>
               </div>
-
               <div className="mt-8">
-                <h2 className="text-2xl font-bold mb-4">Location for {listing.name}</h2>
+                <h2 className="text-2xl font-bold mb-4">Location</h2>
                 <MapContainer center={[listing.location.latitude, listing.location.longitude]} zoom={13} className="w-full h-64 rounded-lg">
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
