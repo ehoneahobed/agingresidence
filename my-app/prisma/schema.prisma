@@ -62,4 +62,20 @@ model Listing {
   locationId Int
   author        Author    @relation(fields: [authorId], references: [id])
   authorId      Int
+  serviceRequests ServiceRequest[]
+}
+
+model ServiceRequest {
+  id             Int      @id @default(autoincrement())
+  fullName       String
+  email          String
+  zipCode        String
+  phone          String?
+  careNeeded     String?
+  relationToResident String?
+  moveInDate     DateTime?
+  budget         String?
+  listingId      Int
+  listing        Listing  @relation(fields: [listingId], references: [id])
+  createdAt      DateTime @default(now())
 }

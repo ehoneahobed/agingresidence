@@ -10,6 +10,7 @@ import "leaflet/dist/leaflet.css";
 import Image from 'next/image';
 
 interface Listing {
+  id: number;
   slug: string;
   name: string;
   phone: string;
@@ -35,6 +36,18 @@ const SingleListing: React.FC = () => {
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    zipCode: '',
+    phone: '',
+    careNeeded: '',
+    relationToResident: '',
+    moveInDate: '',
+    budget: '',
+  });
+  const [formError, setFormError] = useState<string | null>(null);
+  const [formSuccess, setFormSuccess] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof slug !== 'string') {
@@ -62,6 +75,48 @@ const SingleListing: React.FC = () => {
     fetchListing();
   }, [slug]);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prevFormData => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch('/api/service-requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          listingId: listing?.id,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to submit service request');
+      }
+
+      setFormSuccess('Your request has been submitted successfully.');
+      setFormError(null);
+      setFormData({
+        fullName: '',
+        email: '',
+        zipCode: '',
+        phone: '',
+        careNeeded: '',
+        relationToResident: '',
+        moveInDate: '',
+        budget: '',
+      });
+    } catch (error: any) {
+      setFormError(error.message);
+      setFormSuccess(null);
+    }
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -82,16 +137,14 @@ const SingleListing: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="relative w-full h-64">
-                {/* <Image className="w-full h-64 object-cover rounded-lg" src={listing.featuredImage} alt={listing.name} /> */}
                 <Image
                   className="rounded-lg"
-                  loader={()=>listing.image}
+                  loader={() => listing.image}
                   src={listing.image}
                   alt={listing.name}
                   layout="fill"
                   objectFit="cover"
                 />
-              
               </div>
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
               <div className="flex items-center mt-2">
@@ -152,54 +205,72 @@ const SingleListing: React.FC = () => {
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Find the Perfect Assisted Living Community</h2>
                 <p className="text-gray-600 mb-4">Connect with top-rated assisted living facilities. Fill out the form below to get started!</p>
-                <form className="space-y-4">
+                {formError && <p className="text-red-500">{formError}</p>}
+                {formSuccess && <p className="text-green-500">{formSuccess}</p>}
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
                     <label htmlFor="full-name" className="block text-sm font-medium text-gray-700">Full Name <span className="text-red-500">*</span></label>
-                    <input type="text" id="full-name" name="full-name" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
+                    <input type="text" id="full-name" name="fullName" value={formData.fullName} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email <span className="text-red-500">*</span></label>
-                    <input type="email" id="email" name="email" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="zip-code" className="block text-sm font-medium text-gray-700">Zip Code <span className="text-red-500">*</span></label>
-                      <input type="text" id="zip-code" name="zip-code" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
+                      <input type="text" id="zip-code" name="zipCode" value={formData.zipCode} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
                     </div>
                     <div>
                       <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
-                      <input type="text" id="phone" name="phone" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
+                      <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
                     </div>
                   </div>
+                  
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="care-needed" className="block text-sm font-medium text-gray-700">Care Needed</label>
-                      <select id="care-needed" name="care-needed" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
-                        <option>Care Needed</option>
-                        {/* Add options as needed */}
+                      <select id="care-needed" name="careNeeded" value={formData.careNeeded} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                        <option value="">Select Care Needed</option>
+                        <option value="assistedLiving">Assisted Living</option>
+                        <option value="memoryCare">Memory Care</option>
+                        <option value="independentLiving">Independent Living</option>
+                        <option value="nursingHome">Nursing Home</option>
+                        <option value="respiteCare">Respite Care</option>
+                        <option value="hospiceCare">Hospice Care</option>
                       </select>
                     </div>
                     <div>
                       <label htmlFor="relation-to-resident" className="block text-sm font-medium text-gray-700">Relation to Resident</label>
-                      <select id="relation-to-resident" name="relation-to-resident" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
-                        <option>Self</option>
-                        {/* Add options as needed */}
+                      <select id="relation-to-resident" name="relationToResident" value={formData.relationToResident} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                        <option value="">Select Relation</option>
+                        <option value="self">Self</option>
+                        <option value="spouse">Spouse</option>
+                        <option value="child">Child</option>
+                        <option value="otherRelative">Other Relative</option>
+                        <option value="friend">Friend</option>
+                        <option value="professional">Professional</option>
                       </select>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label htmlFor="move-in-date" className="block text-sm font-medium text-gray-700">Expected Move-in Date</label>
-                      <input type="date" id="move-in-date" name="move-in-date" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
+                      <input type="date" id="move-in-date" name="moveInDate" value={formData.moveInDate} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm" />
                     </div>
                     <div>
                       <label htmlFor="budget" className="block text-sm font-medium text-gray-700">Budget</label>
-                      <select id="budget" name="budget" className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
-                        <option>Less than $5000</option>
-                        {/* Add options as needed */}
+                      <select id="budget" name="budget" value={formData.budget} onChange={handleInputChange} className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm">
+                        <option value="">Select Budget</option>
+                        <option value="lessThan5000">Less than $5000</option>
+                        <option value="5000to10000">$5000 to $10000</option>
+                        <option value="10000to15000">$10000 to $15000</option>
+                        <option value="15000to20000">$15000 to $20000</option>
+                        <option value="moreThan20000">More than $20000</option>
                       </select>
                     </div>
                   </div>
+
                   <button type="submit" className="w-full px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
                 </form>
               </div>
