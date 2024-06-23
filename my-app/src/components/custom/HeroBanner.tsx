@@ -1,6 +1,48 @@
-import React from 'react';
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 const HeroBanner: React.FC = () => {
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('');
+  const [location, setLocation] = useState('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch('/api/categories');
+        if (!res.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+        const data = await res.json();
+        setCategories(data);
+      } catch (error: any) {
+        console.error(error.message);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    const queryParams = new URLSearchParams({
+      ...(query && { query }),
+      ...(category && { category }),
+      ...(location && { location }),
+    }).toString();
+
+    router.push(`/search?${queryParams}`);
+  };
+
   return (
     <div className="relative bg-cover bg-center h-screen md:h-[60vh]" style={{ backgroundImage: "url('https://placehold.co/1200x600')" }}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -13,25 +55,40 @@ const HeroBanner: React.FC = () => {
             Browse and compare trusted senior residences near you.
           </p>
         </div>
-        <div className="flex flex-col sm:flex-row mt-8 space-y-4 sm:space-y-0 sm:space-x-4 w-full max-w-[60rem]">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row mt-8 space-y-4 sm:space-y-0 sm:space-x-4 w-full max-w-[60rem]">
           <input
             type="text"
             placeholder="What are you looking for?"
-            className="p-4 w-full sm:flex-1 rounded-lg"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="p-4 w-full sm:flex-1 rounded-lg text-teal-950"
           />
-          <select className="p-4 w-full sm:w-40 rounded-lg">
-            <option>Category</option>
-            {/* Add more options as needed */}
+          <select
+            value={category}
+            
+            onChange={(e) => setCategory(e.target.value)}
+            className="p-2 w-full sm:w-40 appearance-none rounded-lg text-teal-950 bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
+          >
+            <option value="" disabled hidden>
+              Select Category
+            </option>
+            {categories.map((cat) => (
+              <option key={cat.id} value={cat.name}>
+                {cat.name}
+              </option>
+            ))}
           </select>
           <input
             type="text"
             placeholder="Location"
-            className="p-4 w-full sm:w-40 rounded-lg"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className="p-4 w-full sm:w-40 rounded-lg text-teal-950"
           />
-          <button className="px-6 py-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 w-full sm:w-auto">
+          <button type="submit" className="px-6 py-4 bg-teal-500 text-white rounded-lg hover:bg-teal-600 w-full sm:w-auto">
             Search Listing
           </button>
-        </div>
+        </form>
       </div>
     </div>
   );

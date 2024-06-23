@@ -1,5 +1,4 @@
 // app/api/categories/[slug]/route.ts
-// Get Listings by Category
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 
@@ -14,17 +13,26 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
       include: {
         listings: {
           include: {
-            location: true,
-            author: true,
+            listing: {
+              include: {
+                location: true,
+                author: true,
+              },
+            },
           },
         },
       },
     });
+
     if (!category) {
       return NextResponse.json({ message: 'Category not found' }, { status: 404 });
     }
-    return NextResponse.json(category.listings);
+
+    const listings = category.listings.map((categoryListing) => categoryListing.listing);
+
+    return NextResponse.json(listings, { status: 200 });
   } catch (error: any) {
+    console.error('Error fetching category listings:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
