@@ -15,14 +15,24 @@ datasource db {
 
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String
-  slug String @unique
-  description String?  @db.Text
-  image String?
-  listings Listing[]
-
+  id          Int                @id @default(autoincrement())
+  name        String
+  slug        String             @unique
+  description String?            @db.Text
+  image       String?
+  listings    CategoryListing[]
 }
+
+model CategoryListing {
+  id          Int       @id @default(autoincrement())
+  listingId   Int
+  categoryId  Int
+  listing     Listing   @relation(fields: [listingId], references: [id])
+  category    Category  @relation(fields: [categoryId], references: [id])
+  @@unique([listingId, categoryId])
+}
+
+
 
 model Location {
   id Int @id @default(autoincrement())
@@ -42,28 +52,60 @@ model Author {
 }
 
 
+// model Listing {
+//   id Int @id @default(autoincrement())
+//   slug          String    @unique
+//   name          String
+//   phone         String?
+//   views         Int       @default(0)
+//   state         String
+//   image         String
+//   gallery       Json
+//   description   String?   @db.Text
+//   rating        Float?
+//   website       String?
+//   operatingHours String?
+//   tags          Json
+//   category Category @relation(fields: [categoryId], references: [id])
+//   categoryId Int
+//   location Location @relation(fields: [locationId], references: [id])
+//   locationId Int
+//   author        Author    @relation(fields: [authorId], references: [id])
+//   authorId      Int
+//   serviceRequests ServiceRequest[]
+//   servicesOffered       Json
+//   reviews Review[]
+// }
+
 model Listing {
-  id Int @id @default(autoincrement())
-  slug          String    @unique
-  name          String
-  phone         String?
-  views         Int       @default(0)
-  state         String
-  image         String
-  gallery       Json
-  description   String?   @db.Text
-  rating        Float?
-  website       String?
-  operatingHours String?
-  tags          Json
-  category Category @relation(fields: [categoryId], references: [id])
-  categoryId Int
-  location Location @relation(fields: [locationId], references: [id])
-  locationId Int
-  author        Author    @relation(fields: [authorId], references: [id])
-  authorId      Int
+  id              Int                @id @default(autoincrement())
+  slug            String             @unique
+  name            String
+  phone           String?
+  views           Int                @default(0)
+  state           String
+  image           String
+  gallery         Json
+  description     String?            @db.Text
+  rating          Float?
+  website         String?
+  operatingHours  String?            @db.Text
+  tags            Json
+  locationId      Int
+  authorId        Int
+  type_of_service Json
+  review_generated String?           @db.Text
+  similar_places  Json
+  status          String             @default("draft")
+  categoryListing CategoryListing[]
+  location        Location           @relation(fields: [locationId], references: [id])
+  author          Author             @relation(fields: [authorId], references: [id])
   serviceRequests ServiceRequest[]
+  reviews         Review[]
 }
+
+
+
 
 model ServiceRequest {
   id             Int      @id @default(autoincrement())
@@ -78,4 +120,19 @@ model ServiceRequest {
   listingId      Int
   listing        Listing  @relation(fields: [listingId], references: [id])
   createdAt      DateTime @default(now())
+}
+
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+
+model Review {
+  id Int @id @default(autoincrement())
+  text String
+  rating Float
+  listingId Int
+  listing Listing @relation(fields: [listingId], references: [id])
 }
