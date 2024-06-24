@@ -18,7 +18,7 @@ interface Listing {
   description: string;
 }
 
-const listingsPerPage = 3;
+const listingsPerPage = 9;
 
 const AllListings: React.FC = () => {
   const [listings, setListings] = useState<Listing[]>([]);
