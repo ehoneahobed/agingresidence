@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 const DiscoverCommunity: React.FC = () => {
   return (
-    <div className="relative bg-cover bg-center h-[50vh]" style={{ backgroundImage: "url('https://placehold.co/1920x600')" }}>
+    <div className="relative bg-cover bg-center h-[50vh]" style={{ backgroundImage: "url('https://agingresidence.com/listing_images/aging_residence_images/aging-residence-banner2.jpg')" }}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 sm:px-6 lg:px-8 text-center text-white">
         <h2 className="text-3xl sm:text-4xl font-bold">Discover Your Ideal Senior Living Community</h2>
