@@ -84,7 +84,7 @@ categories = cursor_new.fetchall()
 category_map = {category_name.lower(): category_id for category_id, category_name in categories}
 
 # Batch size for processing
-batch_size = 2
+batch_size = 100
 offset = 0
 
 while True:
