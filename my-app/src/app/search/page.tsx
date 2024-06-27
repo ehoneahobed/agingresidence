@@ -2,6 +2,7 @@
 
 import React, { Suspense } from 'react';
 import SearchResultsPage from '@/components/custom/SearchResults';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 const SearchPage: React.FC = () => {
   return (
