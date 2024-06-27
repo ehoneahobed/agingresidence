@@ -6,6 +6,7 @@ import Link from 'next/link';
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import LoadingSpinner from '@/components/custom/LoadingSpinner';
+import Pagination from '@/components/custom/Pagination';
 
 interface Listing {
   slug: string;
@@ -23,8 +24,12 @@ const SearchResultsPage: React.FC = () => {
   const category = searchParams.get('category') || '';
   const location = searchParams.get('location') || '';
   const [listings, setListings] = useState<Listing[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const listingsPerPage = 10; // Adjust the number of listings per page
 
   useEffect(() => {
     const fetchListings = async () => {
@@ -35,6 +40,7 @@ const SearchResultsPage: React.FC = () => {
         }
         const data = await res.json();
         setListings(data);
+        setTotalPages(Math.ceil(data.length / listingsPerPage));
       } catch (error: any) {
         setError(error.message);
       } finally {
@@ -45,8 +51,21 @@ const SearchResultsPage: React.FC = () => {
     fetchListings();
   }, [query, category, location]);
 
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const startIndex = (currentPage - 1) * listingsPerPage;
+  const currentListings = listings.slice(startIndex, startIndex + listingsPerPage);
+
   if (loading) {
-    return <LoadingSpinner/>;
+    return (
+      <div>
+        <NavBar />
+        <LoadingSpinner/>
+        <Footer />
+      </div>
+    );
   }
 
   if (error) {
@@ -60,8 +79,8 @@ const SearchResultsPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-extrabold text-gray-900 text-left">Search Results</h1>
           <div className="mt-10 grid gap-6 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1">
-            {listings.length > 0 ? (
-              listings.map((listing) => (
+            {currentListings.length > 0 ? (
+              currentListings.map((listing) => (
                 <Link key={listing.slug} href={`/community/${listing.slug}`} passHref className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-md">
                   <div className="cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                     <img className="w-full h-48 object-cover" src={listing.image} alt={listing.name} />
@@ -85,6 +104,7 @@ const SearchResultsPage: React.FC = () => {
               <p>No listings found</p>
             )}
           </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
       </main>
       <Footer />

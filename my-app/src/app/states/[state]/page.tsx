@@ -104,7 +104,13 @@ const StateListingsPage: React.FC = () => {
   }, [state]);
 
   if (loading) {
-    return <LoadingSpinner/>;
+    return (
+      <div>
+        <NavBar />
+        <LoadingSpinner/>
+        <Footer />
+      </div>
+    );
   }
 
   if (error) {

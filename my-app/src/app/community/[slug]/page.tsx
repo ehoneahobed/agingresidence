@@ -102,8 +102,13 @@ const SingleListing: React.FC = () => {
   }, [listing]);
 
   if (loading) {
-    // return <p>Loading...</p>;
-    return <LoadingSpinner/>
+    return (
+      <div>
+        <NavBar />
+        <LoadingSpinner/>
+        <Footer />
+      </div>
+    );
   }
 
   if (error) {

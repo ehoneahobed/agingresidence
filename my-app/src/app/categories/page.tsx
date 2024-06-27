@@ -38,7 +38,15 @@ const CategoriesPage = () => {
     fetchCategories();
   }, []);
 
-  if (loading) return <LoadingSpinner/>;
+  if (loading) {
+    return (
+      <div>
+        <NavBar />
+        <LoadingSpinner/>
+        <Footer />
+      </div>
+    );
+  };
   if (error) return <p>{error}</p>;
 
   return (
