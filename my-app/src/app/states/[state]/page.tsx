@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Listing {
   slug: string;
@@ -103,7 +104,7 @@ const StateListingsPage: React.FC = () => {
   }, [state]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner/>;
   }
 
   if (error) {

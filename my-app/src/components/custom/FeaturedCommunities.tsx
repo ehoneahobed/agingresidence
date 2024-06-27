@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import LoadingSpinner from './LoadingSpinner';
 
 interface Community {
   slug: string;
@@ -38,7 +39,7 @@ const FeaturedCommunities: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner/>;
   }
 
   if (error) {

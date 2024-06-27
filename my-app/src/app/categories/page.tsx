@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import Link from 'next/link';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Category {
   id: number;
@@ -37,7 +38,7 @@ const CategoriesPage = () => {
     fetchCategories();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <LoadingSpinner/>;
   if (error) return <p>{error}</p>;
 
   return (

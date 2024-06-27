@@ -11,6 +11,7 @@ import SimilarCommunities from '@/components/custom/SimilarCommunities';
 import ServiceRequestForm from '@/components/custom/ServiceRequestForm';
 import Gallery from '@/components/custom/GalleryFrame'; 
 import ListingReview from '@/components/custom/ListingReview';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Listing {
   id: number;
@@ -101,7 +102,8 @@ const SingleListing: React.FC = () => {
   }, [listing]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    // return <p>Loading...</p>;
+    return <LoadingSpinner/>
   }
 
   if (error) {

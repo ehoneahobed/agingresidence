@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Listing {
   slug: string;
@@ -45,7 +46,7 @@ const SearchResultsPage: React.FC = () => {
   }, [query, category, location]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <LoadingSpinner/>;
   }
 
   if (error) {

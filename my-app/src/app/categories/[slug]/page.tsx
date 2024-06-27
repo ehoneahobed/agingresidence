@@ -4,6 +4,7 @@ import Link from "next/link";
 import { htmlToText } from 'html-to-text';
 import NavBar from "@/components/custom/NavBar";
 import Footer from "@/components/custom/Footer";
+import LoadingSpinner from "@/components/custom/LoadingSpinner";
 
 interface Listing {
   id: number;
@@ -67,11 +68,7 @@ const CategoryListingsPage: React.FC<{ params: { slug: string } }> = ({ params }
     return (
       <div>
         <NavBar />
-        <main className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Loading...</h1>
-          </div>
-        </main>
+        <LoadingSpinner/>
         <Footer />
       </div>
     );

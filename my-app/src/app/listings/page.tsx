@@ -6,6 +6,7 @@ import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import Filters from '@/components/custom/Filters';
 import Pagination from '@/components/custom/Pagination';
+import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Listing {
   slug: string;
@@ -75,11 +76,7 @@ const AllListings: React.FC = () => {
     return (
       <div>
         <NavBar />
-        <main className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-3xl font-extrabold text-gray-900 text-center">Loading...</h1>
-          </div>
-        </main>
+        <LoadingSpinner/>
         <Footer />
       </div>
     );
