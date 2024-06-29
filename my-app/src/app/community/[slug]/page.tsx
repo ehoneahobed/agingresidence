@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import Image from 'next/image';
@@ -49,6 +49,7 @@ interface SimilarListing {
 
 const SingleListing: React.FC = () => {
   const { slug } = useParams();
+  const router = useRouter();
   const [listing, setListing] = useState<Listing | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -65,12 +66,12 @@ const SingleListing: React.FC = () => {
       try {
         const res = await fetch(`/api/listings/${slug}`);
         if (!res.ok) {
+          if (res.status === 404) {
+            router.push(`/404?url=${encodeURIComponent(window.location.href)}`);
+          }
           throw new Error('Failed to fetch listing');
         }
         const data: Listing = await res.json();
-
-        console.log('Listing Data:', data); // Debugging log
-
         setListing(data);
       } catch (error: any) {
         setError(error.message);
@@ -105,7 +106,7 @@ const SingleListing: React.FC = () => {
     return (
       <div>
         <NavBar />
-        <LoadingSpinner/>
+        <LoadingSpinner />
         <Footer />
       </div>
     );
@@ -119,12 +120,11 @@ const SingleListing: React.FC = () => {
     return <p>Listing not found</p>;
   }
 
-    // Split the description into paragraphs
-    const paragraphs = listing.description.split('. ').map((text, index) => (
-      <p key={index} className="mb-4">{text}.</p>
-    ));
-  
-    
+  // Split the description into paragraphs
+  const paragraphs = listing.description.split('. ').map((text, index) => (
+    <p key={index} className="mb-4">{text}.</p>
+  ));
+
   return (
     <div>
       <NavBar />
@@ -164,12 +164,7 @@ const SingleListing: React.FC = () => {
                   <span key={index} className="bg-teal-100 text-teal-800 text-sm font-semibold mr-2 px-2.5 py-0.5 rounded">{tag}</span>
                 ))}
               </div>
-              {/* <div
-                className="prose prose-lg mt-4 text-gray-600"
-                dangerouslySetInnerHTML={{ __html: listing.description }}
-              /> */}
-
-<div className="prose prose-lg mt-4 text-gray-600 text-justify">
+              <div className="prose prose-lg mt-4 text-gray-600 text-justify">
                 {paragraphs}
               </div>
               <ListingReview review={listing.review_generated} />
