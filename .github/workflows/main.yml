@@ -29,7 +29,14 @@ jobs:
         run: |
           cd ./my-app
           npm run build
-        
+      
+      - name: Debugging step to check secrets
+        run: |
+          echo "HOST: ${{ secrets.AGR_HOST }}"
+          echo "USER: ${{ secrets.AGR_USER }}"
+          echo "SSH_KEY: ${{ secrets.AGR_SSH_KEY }}"
+          echo "REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}"
+      
       - name: Deploy
         env:
           HOST: ${{ secrets.AGR_HOST }}
