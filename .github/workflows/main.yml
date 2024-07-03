@@ -13,33 +13,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Change directory if package.json is not in root
-        run: cd ./my-app
-
       - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
           node-version: 18.x
 
       - name: Install dependencies
-        run: |
-          cd ./my-app
-          npm install
+        run: npm install
 
       - name: Build
+        run: npm run build
+
+      - name: Verify Environment Variables
         run: |
-          cd ./my-app
-          npm run build
+          echo "HOST: ${{ secrets.AGR_HOST }}"
+          echo "USER: ${{ secrets.AGR_USER }}"
+          echo "REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}"
+        env:
+          HOST: ${{ secrets.AGR_HOST }}
+          USER: ${{ secrets.AGR_USER }}
+          REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}
 
       - name: Deploy
         env:
-          HOST: "agingresidence.com"
-          USER: "ehoneah"
+          HOST: ${{ secrets.AGR_HOST }}
+          USER: ${{ secrets.AGR_USER }}
           SSH_KEY: ${{ secrets.AGR_SSH_KEY }}
           REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}
         run: |
           mkdir -p ~/.ssh
-          echo "${SSH_KEY}" > ~/.ssh/id_rsa
+          echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
           rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' ./ $USER@$HOST:$REMOTE_DIR
