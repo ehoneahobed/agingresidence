@@ -12,6 +12,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
+      - name: Change directory if package.json is not in root
+        run: cd ./my-app
+
       - name: Use Node.js 18.x
         uses: actions/setup-node@v1
         with:
