@@ -19,10 +19,14 @@ jobs:
           node-version: 18.x
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd ./my-app
+          npm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd ./my-app
+          npm run build
 
       - name: Verify Environment Variables
         run: |
@@ -45,7 +49,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' ./ $USER@$HOST:$REMOTE_DIR
+          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' ./my-app/ $USER@$HOST:$REMOTE_DIR
           ssh $USER@$HOST "cd $REMOTE_DIR && npm install --production && pm2 restart all"
 
       - name: Notify Deployment
