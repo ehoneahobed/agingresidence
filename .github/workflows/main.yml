@@ -1,0 +1,44 @@
+name: Deploy Aging Residence
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Change directory if package.json is not in root
+        run: cd ./my-app
+
+      - name: Use Node.js 18.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.x
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build
+        run: npm run build
+        
+      - name: Deploy
+        env:
+          HOST: ${{ secrets.AGR_HOST }}
+          USER: ${{ secrets.AGR_USER }}
+          SSH_KEY: ${{ secrets.AGR_SSH_KEY }}
+          REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${SSH_KEY}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' ./ $USER@$HOST:$REMOTE_DIR
+          ssh $USER@$HOST "cd $REMOTE_DIR && npm install --production && pm2 restart all"
+
+      - name: Notify Deployment
+        run: echo "Deployment to server complete."

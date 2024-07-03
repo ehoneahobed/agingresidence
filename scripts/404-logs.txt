@@ -1,0 +1,188 @@
+200 OK: https://agingresidence.vercel.app/community/edelweiss-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/golden-years-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/glencroft-senior-living/
+200 OK: https://agingresidence.vercel.app/community/tanner-terrace-apartments/
+200 OK: https://agingresidence.vercel.app/community/glencroft-center-for-modern-aging/
+200 OK: https://agingresidence.vercel.app/community/holiday-westgate-village/
+200 OK: https://agingresidence.vercel.app/community/glendale-enterprise-lofts/
+200 OK: https://agingresidence.vercel.app/community/manistee-manor-retirement-living-disciples-house-of-glendale-inc/
+200 OK: https://agingresidence.vercel.app/community/quail-manor-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/beverly-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/brookdale-arrowhead-ranch/
+200 OK: https://agingresidence.vercel.app/community/ozark-senior-citizen-housing/
+200 OK: https://agingresidence.vercel.app/community/magnolia-square-nursing/
+200 OK: https://agingresidence.vercel.app/community/christian-health-care-of-springfield-east/
+200 OK: https://agingresidence.vercel.app/community/nixa-nursing-rehab/
+200 OK: https://agingresidence.vercel.app/community/bristol-manor/
+200 OK: https://agingresidence.vercel.app/community/ozard-residential-care-center/
+200 OK: https://agingresidence.vercel.app/community/ozark-nursing-care-center/
+200 OK: https://agingresidence.vercel.app/community/ozark-riverview-manor/
+200 OK: https://agingresidence.vercel.app/community/holiday-creekside-at-shallowford/
+200 OK: https://agingresidence.vercel.app/community/brookdale-hixson/
+200 OK: https://agingresidence.vercel.app/community/rockbridge-oaks/
+200 OK: https://agingresidence.vercel.app/community/storypoint-chattanooga/
+200 OK: https://agingresidence.vercel.app/community/the-rosewood-at-fort-oglethorpe/
+200 OK: https://agingresidence.vercel.app/community/care-first-assisted-living-home-llc/
+200 OK: https://agingresidence.vercel.app/community/bella-amore-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/apollo-residential-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/christian-care-health-center/
+200 OK: https://agingresidence.vercel.app/community/haven-health-phoenix/
+200 OK: https://agingresidence.vercel.app/community/heritage-court-post-acute-of-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/la-loma-village-health-rehabilitation-center/
+200 OK: https://agingresidence.vercel.app/community/mcdowell-village/
+200 OK: https://agingresidence.vercel.app/community/ocotillo-place/
+200 OK: https://agingresidence.vercel.app/community/mimosa-springs-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/legacy-village-of-salt-river/
+200 OK: https://agingresidence.vercel.app/community/north-scottsdale-retreat/
+200 OK: https://agingresidence.vercel.app/community/the-springs-of-scottsdale-independent-assisted-senior-living/
+200 OK: https://agingresidence.vercel.app/community/senior-living-services/
+200 OK: https://agingresidence.vercel.app/community/sunrise-care-homes-shea/
+200 OK: https://agingresidence.vercel.app/community/pinnacle-peak-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/belmont-village-senior-living-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/central-scottsdale-assisted-living-by-md-senior-living/
+200 OK: https://agingresidence.vercel.app/community/sunrise-of-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/desert-cove-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/sun-valley-manor-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/clarendale-of-chandler/
+200 OK: https://agingresidence.vercel.app/community/plaza-view-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/bridgewater-assisted-living-midtown/
+200 OK: https://agingresidence.vercel.app/community/ridge-at-the-stratford/
+200 OK: https://agingresidence.vercel.app/community/paradise-valley-senior-home-care/
+200 OK: https://agingresidence.vercel.app/community/golden-eagleassistedliving-home/
+200 OK: https://agingresidence.vercel.app/community/north-haven-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/madison-gardens-senior-community/
+200 OK: https://agingresidence.vercel.app/community/tina-loring-group-home-tlgh/
+200 OK: https://agingresidence.vercel.app/community/all-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/desert-haven-llc/
+200 OK: https://agingresidence.vercel.app/community/desert-haven-home-care/
+200 OK: https://agingresidence.vercel.app/community/ambiance-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/primavera-assisted-living-llc/
+200 OK: https://agingresidence.vercel.app/community/heritage-at-carefree-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/the-senior-living-institute/
+200 OK: https://agingresidence.vercel.app/community/carefree-manor-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/proposed-assisted-living-site/
+200 OK: https://agingresidence.vercel.app/community/via-linda-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/scottsdale-village-square/
+200 OK: https://agingresidence.vercel.app/community/promenade-at-beatitudes-campus/
+200 OK: https://agingresidence.vercel.app/community/pueblo-norte-senior-living/
+200 OK: https://agingresidence.vercel.app/community/acoya-shea/
+200 OK: https://agingresidence.vercel.app/community/north-valley-senior-living/
+200 OK: https://agingresidence.vercel.app/community/olive-grove-assisted-living-and-memory-care/
+200 OK: https://agingresidence.vercel.app/community/rose-court-senior-living/
+200 OK: https://agingresidence.vercel.app/community/matters-of-senior-living-inc/
+200 OK: https://agingresidence.vercel.app/community/vista-living-senior-care-camelback/
+200 OK: https://agingresidence.vercel.app/community/olive-ridge-senior-living/
+200 OK: https://agingresidence.vercel.app/community/fletcher-heights-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/fellowship-towers/
+200 OK: https://agingresidence.vercel.app/community/the-retreat-at-alameda-assisted-living-memory-care/
+200 OK: https://agingresidence.vercel.app/community/white-violet-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/the-park-at-surprise-independent-living-community/
+200 OK: https://agingresidence.vercel.app/community/browns-assisted-living-center/
+200 OK: https://agingresidence.vercel.app/community/harmony-of-stevens-point/
+200 OK: https://agingresidence.vercel.app/community/care-partners-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/sylvan-crossings-of-stevens-point/
+200 OK: https://agingresidence.vercel.app/community/copperleaf-senior-living/
+200 OK: https://agingresidence.vercel.app/community/a-sunny-pine-assisted-living-community/
+200 OK: https://agingresidence.vercel.app/community/zen-senior-living/
+200 OK: https://agingresidence.vercel.app/community/acoma-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/encanto-palms-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/hawthorn-court-at-ahwatukee/
+200 OK: https://agingresidence.vercel.app/community/ahwatukee-manor-assisted-living-llc/
+200 OK: https://agingresidence.vercel.app/community/clearwater-ahwatukee/
+200 OK: https://agingresidence.vercel.app/community/south-mountain-care-center/
+200 OK: https://agingresidence.vercel.app/community/st-joseph-home-for-the-elderly/
+200 OK: https://agingresidence.vercel.app/community/ahwatukee-adult-care-ii/
+200 OK: https://agingresidence.vercel.app/community/bridgewater-assisted-living-deer-valley/
+200 OK: https://agingresidence.vercel.app/community/desert-comfort-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/affection-care-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/sunnyslope-manor/
+200 OK: https://agingresidence.vercel.app/community/clearwater-mayo-blvd/
+200 OK: https://agingresidence.vercel.app/community/the-ranch-estates-at-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/maravilla-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/az-life-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/ventana-winds-retirement-home/
+200 OK: https://agingresidence.vercel.app/community/redfield-assisted-living-llc/
+200 OK: https://agingresidence.vercel.app/community/lifestyles-of-glendale/
+200 OK: https://agingresidence.vercel.app/community/thunderbird-senior-living/
+200 OK: https://agingresidence.vercel.app/community/baptist-homes-of-ozark/
+200 OK: https://agingresidence.vercel.app/community/hopedale-cottage/
+200 OK: https://agingresidence.vercel.app/community/century-pines-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/lookout-mountain-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/blue-sage-assisted-living-moon-valley/
+200 OK: https://agingresidence.vercel.app/community/lovin-touch-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/desert-terrace-healthcare-center/
+200 OK: https://agingresidence.vercel.app/community/desert-haven-care-center/
+200 OK: https://agingresidence.vercel.app/community/maryland-gardens-post-acute/
+200 OK: https://agingresidence.vercel.app/community/the-gardens-of-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/brookdale-north-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/assisted-living-of-scottsdale/
+200 OK: https://agingresidence.vercel.app/community/senior-valley-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/manor-on-paradise-assisted-senior-living/
+200 OK: https://agingresidence.vercel.app/community/sunnyside-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/shadow-mountain-memory-care/
+200 OK: https://agingresidence.vercel.app/community/great-heart-adult-assisted-living-home/
+200 OK: https://agingresidence.vercel.app/community/central-assisted-living-llc/
+200 OK: https://agingresidence.vercel.app/community/biltmore-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/bella-vita-assisted-living-at-cholla/
+200 OK: https://agingresidence.vercel.app/community/clarendale-arcadia/
+200 OK: https://agingresidence.vercel.app/community/beatitudes-campus/
+200 OK: https://agingresidence.vercel.app/community/morningstar-assisted-living-memory-care-at-arcadia/
+200 OK: https://agingresidence.vercel.app/community/paradise-valley-senior-retreat/
+200 OK: https://agingresidence.vercel.app/community/paradise-valley-foothills-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/holiday-madison-meadows/
+200 OK: https://agingresidence.vercel.app/community/lynettes-care-home/
+200 OK: https://agingresidence.vercel.app/community/joyful-haven-assisted-living-home-llc/
+200 OK: https://agingresidence.vercel.app/community/abundant-life-senior-care-llc/
+200 OK: https://agingresidence.vercel.app/community/senior-living-cave-creek-az/
+200 OK: https://agingresidence.vercel.app/community/pacifica-senior-living-paradise-valley/
+200 OK: https://agingresidence.vercel.app/community/avista-senior-living-north-mountain/
+200 OK: https://agingresidence.vercel.app/community/fellowship-square-phoenix/
+200 OK: https://agingresidence.vercel.app/community/park-terrace-senior-living/
+200 OK: https://agingresidence.vercel.app/community/willow-brooke-point-senior-living/
+200 OK: https://agingresidence.vercel.app/community/la-siena/
+200 OK: https://agingresidence.vercel.app/community/mountain-park-senior-living/
+200 OK: https://agingresidence.vercel.app/community/brookdale-desert-ridge/
+200 OK: https://agingresidence.vercel.app/community/the-manor-village-at-desert-ridge/
+200 OK: https://agingresidence.vercel.app/community/lifestream-at-youngtown/
+200 OK: https://agingresidence.vercel.app/community/lifestream-at-glendale/
+200 OK: https://agingresidence.vercel.app/community/north-valley-assisted-living/
+200 OK: https://agingresidence.vercel.app/community/bethesda-gardens-assisted-living-and-memory-care-phoenix/
+200 OK: https://agingresidence.vercel.app/community/senior-paradise-living/
+200 OK: https://agingresidence.vercel.app/community/infinite-pathways-care-home-memory-care/
+200 OK: https://agingresidence.vercel.app/community/brookdale-central-paradise-valley/
+200 OK: https://agingresidence.vercel.app/community/lifestream-at-north-phoenix/
+Error fetching https://agingresidence.vercel.app/all-categories-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-locations-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/terms-and-conditions-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/privacy-policy-3/: fs is not defined
+Error fetching https://agingresidence.vercel.app/search-home/: fs is not defined
+Error fetching https://agingresidence.vercel.app/search-result/: fs is not defined
+Error fetching https://agingresidence.vercel.app/add-listing/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-listings/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-category/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-location/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-tag/: fs is not defined
+Error fetching https://agingresidence.vercel.app/author-profile/: fs is not defined
+Error fetching https://agingresidence.vercel.app/dashboard/: fs is not defined
+Error fetching https://agingresidence.vercel.app/registration/: fs is not defined
+Error fetching https://agingresidence.vercel.app/login/: fs is not defined
+200 OK: https://agingresidence.vercel.app/
+Error fetching https://agingresidence.vercel.app/payment-receipt/: fs is not defined
+Error fetching https://agingresidence.vercel.app/transaction-failure/: fs is not defined
+Error fetching https://agingresidence.vercel.app/checkout/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-categories/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-locations/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-authors/: fs is not defined
+Error fetching https://agingresidence.vercel.app/terms-and-conditions/: fs is not defined
+Error fetching https://agingresidence.vercel.app/privacy-policy-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/search-home-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/search-result-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/add-listing-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/all-listings-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-category-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-location-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/single-tag-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/author-profile-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/dashboard-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/registration-2/: fs is not defined
+Error fetching https://agingresidence.vercel.app/login-2/: fs is not defined
