@@ -30,9 +30,9 @@ jobs:
 
       - name: Verify Environment Variables
         run: |
-          echo "HOST: ${{ secrets.AGR_HOST }}"
-          echo "USER: ${{ secrets.AGR_USER }}"
-          echo "REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}"
+          echo "HOST: ${AGR_HOST:0:4}****"
+          echo "USER: ${AGR_USER:0:4}****"
+          echo "REMOTE_DIR: ${AGR_REMOTE_DIR:0:4}****"
         env:
           HOST: ${{ secrets.AGR_HOST }}
           USER: ${{ secrets.AGR_USER }}
