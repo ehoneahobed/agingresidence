@@ -58,7 +58,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+          ssh-keyscan $HOST >> ~/..ssh/known_hosts
           rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='public/listing_images' --exclude='backups' ./my-app/ $USER@$HOST:/var/www/html
 
       - name: Install Production Dependencies
@@ -83,7 +83,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          ssh $USER@$HOST "pm2 restart all"
+          ssh $USER@$HOST "export PATH=$PATH:/root/.nvm/versions/node/v20.15.0/bin:/root/.nvm/versions/node/v20.15.0/lib/node_modules/pm2/bin && pm2 restart all"
 
       - name: Notify Deployment
         run: echo "Deployment to server complete."
