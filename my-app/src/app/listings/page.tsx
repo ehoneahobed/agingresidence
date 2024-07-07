@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
@@ -32,15 +33,19 @@ const AllListings: React.FC = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
+        console.log("Testing");
         const res = await fetch('/api/listings');
+        console.log(`Response status: ${res.status}`);
         if (!res.ok) {
           throw new Error('Failed to fetch listings');
         }
         const data: Listing[] = await res.json();
+        console.log('Fetched listings:', data);
         setListings(data);
         setFilteredListings(data);
       } catch (error: any) {
         setError(error.message);
+        console.error('Error fetching listings:', error);
       } finally {
         setLoading(false);
       }
@@ -76,7 +81,7 @@ const AllListings: React.FC = () => {
     return (
       <div>
         <NavBar />
-        <LoadingSpinner/>
+        <LoadingSpinner />
         <Footer />
       </div>
     );
@@ -113,7 +118,7 @@ const AllListings: React.FC = () => {
             {paginatedListings.map((listing, index) => (
               <Link key={index} href={`community/${listing.slug}`} passHref className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div>
-                  <img className="w-full h-48 object-cover" src={listing.image} alt={listing.name} />
+                  <Image className="w-full h-48 object-cover" src={listing.image} alt={listing.name} width={500} height={300} />
                   <div className="p-6">
                     {listing.popular && <span className="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded-full uppercase font-semibold tracking-wide">Popular</span>}
                     <h3 className="mt-2 text-xl font-semibold text-gray-900">{listing.name}</h3>

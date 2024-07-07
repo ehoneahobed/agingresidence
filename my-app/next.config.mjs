@@ -8,6 +8,12 @@ const nextConfig = {
         port: '',
         pathname: '/**', // Adjust this as per your specific needs
       },
+      {
+        protocol: 'https',
+        hostname: 'agingresidence.com',
+        port: '',
+        pathname: '/listing_images/**',
+      },
     ],
   },
   async redirects() {
