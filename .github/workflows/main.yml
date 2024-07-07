@@ -38,6 +38,19 @@ jobs:
           USER: ${{ secrets.AGR_USER }}
           REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}
 
+      - name: Backup existing remote directory
+        env:
+          HOST: ${{ secrets.AGR_HOST }}
+          USER: ${{ secrets.AGR_USER }}
+          SSH_KEY: ${{ secrets.AGR_SSH_KEY }}
+          REMOTE_DIR: ${{ secrets.AGR_REMOTE_DIR }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+          ssh $USER@$HOST "tar czf ${REMOTE_DIR}_backup_$(date +'%Y%m%d%H%M%S').tar.gz -C ${REMOTE_DIR} ."
+
       - name: Deploy
         env:
           HOST: ${{ secrets.AGR_HOST }}
@@ -49,7 +62,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' ./my-app/ $USER@$HOST:$REMOTE_DIR
+          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='public/listing_images' ./my-app/ $USER@$HOST:$REMOTE_DIR
           ssh $USER@$HOST "cd $REMOTE_DIR && npm install --production && pm2 restart all"
 
       - name: Notify Deployment
