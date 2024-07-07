@@ -63,8 +63,9 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='public/listing_images' --exclude='/backups' ./my-app/ $USER@$HOST:$REMOTE_DIR
-          ssh $USER@$HOST "cd $REMOTE_DIR && npm install --production && pm2 restart all"
+          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='public/listing_images' --exclude='backups' ./my-app/ $USER@$HOST:$REMOTE_DIR
+          ssh $USER@$HOST "cd $REMOTE_DIR && npm install --production"
+          ssh $USER@$HOST "pm2 restart all"
 
       - name: Notify Deployment
         run: echo "Deployment to server complete."
