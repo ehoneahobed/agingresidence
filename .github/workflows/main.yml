@@ -49,8 +49,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          ssh $USER@$HOST "mkdir -p $REMOTE_DIR/backups"
-          ssh $USER@$HOST "tar czf $REMOTE_DIR/backups/backup_$(date +'%Y%m%d%H%M%S').tar.gz -C $REMOTE_DIR ."
+          ssh $USER@$HOST "mkdir -p $REMOTE_DIR/backups && tar czf $REMOTE_DIR/backups/backup_$(date +'%Y%m%d%H%M%S').tar.gz -C $REMOTE_DIR ."
 
       - name: Deploy
         env:
