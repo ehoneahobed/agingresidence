@@ -47,7 +47,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          ssh $USER@$HOST "mkdir -p /var/www/html/backups && tar czf /var/www/html/backups/backup_$(date +'%Y%m%d%H%M%S').tar.gz -C /var/www/html ."
+          ssh $USER@$HOST "mkdir -p /var/www/html/backups && tar czf /var/www/html/backups/backup_$(date +'%Y%m%d%H%M%S').tar.gz -C /var/www/html --exclude=./backups ."
 
       - name: Deploy
         env:
