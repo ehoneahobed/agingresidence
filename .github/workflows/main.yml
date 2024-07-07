@@ -71,7 +71,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          ssh $USER@$HOST "cd /var/www/html && npm install --production"
+          ssh $USER@$HOST "cd /var/www/html && /root/.nvm/versions/node/v20.15.0/bin/npm install --production"
 
       - name: Restart PM2
         env:
@@ -82,7 +82,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan $HOST >> ~/.ssh/known_hosts
+          ssh-keyscan $HOST >> ~/..ssh/known_hosts
           ssh $USER@$HOST "pm2 restart all"
 
       - name: Notify Deployment
