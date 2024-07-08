@@ -46,6 +46,8 @@ const FeaturedCommunities: React.FC = () => {
     return <p>{error}</p>;
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -60,8 +62,7 @@ const FeaturedCommunities: React.FC = () => {
                 <div className="relative w-full h-48">
                   <Image
                     className="rounded-lg"
-                    loader={() => community.image}
-                    src={community.image}
+                    src={`${baseUrl}${community.image}`}
                     alt={community.name}
                     layout="fill"
                     objectFit="cover"

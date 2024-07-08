@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import Link from 'next/link';
+import Image from 'next/image';
 import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
 interface Category {
@@ -11,7 +12,7 @@ interface Category {
   name: string;
   slug: string;
   description: string;
-  image: string;
+  image: string | null;
 }
 
 const CategoriesPage = () => {
@@ -42,12 +43,27 @@ const CategoriesPage = () => {
     return (
       <div>
         <NavBar />
-        <LoadingSpinner/>
+        <LoadingSpinner />
         <Footer />
       </div>
     );
-  };
+  }
+
   if (error) return <p>{error}</p>;
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  const constructImageUrl = (path: string | null) => {
+    if (!path) {
+      return '/default_image.jpg'; // Return a default image path if path is null or undefined
+    }
+
+    if (path.startsWith('/')) {
+      return `${baseUrl}${path}`;
+    } else {
+      return `${baseUrl}/${path}`;
+    }
+  };
 
   return (
     <div>
@@ -59,7 +75,15 @@ const CategoriesPage = () => {
             {categories.map((category) => (
               <Link key={category.id} href={`/categories/${category.slug}`}>
                 <div className="cursor-pointer bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                  <img className="w-full h-40 object-cover rounded-lg" src={category.image} alt={category.name} />
+                  <div className="relative w-full h-40">
+                    <Image
+                      className="rounded-lg"
+                      src={constructImageUrl(category.image)}
+                      alt={category.name}
+                      layout="fill"
+                      objectFit="cover"
+                    />
+                  </div>
                   <h2 className="text-2xl font-bold text-gray-900 mt-4">{category.name}</h2>
                   <p className="mt-2 text-gray-600">{category.description}</p>
                 </div>

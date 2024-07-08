@@ -23,6 +23,7 @@ interface Listing {
 const listingsPerPage = 9;
 
 const AllListings: React.FC = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const [listings, setListings] = useState<Listing[]>([]);
   const [filteredListings, setFilteredListings] = useState<Listing[]>([]);
   const [filters, setFilters] = useState<{ state: string; popular: boolean }>({ state: '', popular: false });
@@ -118,7 +119,7 @@ const AllListings: React.FC = () => {
             {paginatedListings.map((listing, index) => (
               <Link key={index} href={`community/${listing.slug}`} passHref className="bg-white rounded-lg shadow-md overflow-hidden">
                 <div>
-                  <Image className="w-full h-48 object-cover" src={listing.image} alt={listing.name} width={500} height={300} />
+                  <Image className="w-full h-48 object-cover" src={`${baseUrl}${listing.image}`} alt={listing.name} width={500} height={300} />
                   <div className="p-6">
                     {listing.popular && <span className="inline-block bg-red-500 text-white text-xs px-2 py-1 rounded-full uppercase font-semibold tracking-wide">Popular</span>}
                     <h3 className="mt-2 text-xl font-semibold text-gray-900">{listing.name}</h3>

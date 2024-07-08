@@ -9,7 +9,7 @@ import OperatingHours from '@/components/custom/OperatingHours';
 import LocationMap from '@/components/custom/LocationMap';
 import SimilarCommunities from '@/components/custom/SimilarCommunities';
 import ServiceRequestForm from '@/components/custom/ServiceRequestForm';
-import Gallery from '@/components/custom/GalleryFrame'; 
+import Gallery from '@/components/custom/GalleryFrame';
 import ListingReview from '@/components/custom/ListingReview';
 import LoadingSpinner from '@/components/custom/LoadingSpinner';
 
@@ -48,6 +48,8 @@ interface SimilarListing {
 }
 
 const SingleListing: React.FC = () => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   const { slug } = useParams();
   const router = useRouter();
   const [listing, setListing] = useState<Listing | null>(null);
@@ -135,12 +137,13 @@ const SingleListing: React.FC = () => {
               <div className="relative w-full h-64">
                 <Image
                   className="rounded-lg"
-                  loader={() => listing.image}
-                  src={listing.image}
+                  src={`${baseUrl}${listing.image}`}
                   alt={listing.name}
                   layout="fill"
                   objectFit="cover"
+                  quality={100}
                 />
+
               </div>
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
               <div className="flex items-center mt-2">
@@ -174,8 +177,8 @@ const SingleListing: React.FC = () => {
               <LocationMap latitude={listing.location.latitude} longitude={listing.location.longitude} name={listing.name} />
             </div>
             <div>
-              <ServiceRequestForm 
-                listingId={listing.id} 
+              <ServiceRequestForm
+                listingId={listing.id}
                 onSubmitSuccess={(message) => setFormSuccess(message)}
                 onSubmitError={(message) => setFormError(message)}
               />
