@@ -27,6 +27,8 @@ jobs:
         run: |
           cd ./my-app
           npm run build
+        env:
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
 
       - name: Verify Environment Variables
         run: |
