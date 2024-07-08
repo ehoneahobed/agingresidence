@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image'
 
 interface SimilarListing {
   id: number;
@@ -22,7 +23,17 @@ const SimilarCommunities: React.FC<SimilarCommunitiesProps> = ({ listings }) => 
           listings.map((similar) => (
             <div key={similar.id} className="bg-white p-2 rounded-lg shadow-md">
               <Link href={`/community/${similar.slug}`}>
-                <img className="w-full h-32 object-cover rounded-lg" src={similar.image} alt={similar.name} />
+                {/* <img className="w-full h-32 object-cover rounded-lg" src={similar.image} alt={similar.name} /> */}
+                
+                <Image
+          className="w-full h-32 object-cover rounded-lg"
+          src={similar.image}
+          alt={similar.name}
+          width={500}
+          height={200}
+          objectFit="cover"
+          layout="responsive"
+        />
                 <h3 className="mt-2 text-lg font-semibold text-gray-900">{similar.name}</h3>
                 <p className="mt-2 text-sm text-gray-600">{similar.phone}</p>
               </Link>

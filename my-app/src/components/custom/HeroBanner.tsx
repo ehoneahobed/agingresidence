@@ -43,8 +43,11 @@ const HeroBanner: React.FC = () => {
     router.push(`/search?${queryParams}`);
   };
 
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   return (
-    <div className="relative bg-cover bg-center h-screen md:h-[60vh]" style={{ backgroundImage: "url('https://agingresidence.com/listing_images/aging_residence_images/aging-residence-banner1.jpg')" }}>
+    <div className="relative bg-cover bg-center h-screen md:h-[60vh]" style={{ backgroundImage: `url(${baseUrl}/listing_images/aging-residence-banner1.jpg)` }}>
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 sm:px-6 lg:px-8 text-center text-white py-12">
         <div className="max-w-[60rem] mx-auto">

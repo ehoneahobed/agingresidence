@@ -59,8 +59,10 @@ const CategoriesPage = () => {
     }
 
     if (path.startsWith('/')) {
+      console.log(`Full catgeory image url: ${baseUrl}${path}`)
       return `${baseUrl}${path}`;
     } else {
+      console.log(`Full catgeory image url: ${baseUrl}${path}`)
       return `${baseUrl}/${path}`;
     }
   };

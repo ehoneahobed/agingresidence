@@ -61,7 +61,7 @@ jobs:
           echo "${SSH_KEY}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan $HOST >> ~/.ssh/known_hosts
-          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='listing_images' --exclude='backups' ./my-app/ $USER@$HOST:/var/www/html
+          rsync -avz --delete --exclude='node_modules' --exclude='.next/cache' --exclude='.env' --exclude='listing_images' --exclude='backups' ./my-app/ $USER@$HOST:/var/www/html
 
       - name: Install Production Dependencies
         env:
