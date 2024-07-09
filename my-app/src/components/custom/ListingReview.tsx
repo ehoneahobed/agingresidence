@@ -1,4 +1,5 @@
 import React from 'react';
+import { marked } from 'marked';
 
 function formatReviewGenerated(review: string): string {
   if (!review) return '';
@@ -8,30 +9,54 @@ function formatReviewGenerated(review: string): string {
   let formattedPros = '';
   let formattedCons = '';
 
-  // Split the review into sections by pros and cons
-  const [overviewSection, prosAndCons] = review.split('Pros:');
-  const [prosSection, consSection] = prosAndCons ? prosAndCons.split('Cons:') : ['', ''];
+  // Use case-insensitive regex to match the sections at the start of a line
+  const overviewRegex = /^overview[:\s]*/im;
+  const prosRegex = /^pros[:\s]*/im;
+  const consRegex = /^cons[:\s]*/im;
+
+  // Extract the pros section
+  const prosMatch = review.match(prosRegex);
+  const consMatch = review.match(consRegex);
+
+  const overviewSection = review.substring(
+    0,
+    prosMatch ? prosMatch.index! : consMatch ? consMatch.index! : review.length
+  );
+
+  const prosSection = prosMatch
+    ? review.substring(
+        prosMatch.index! + prosMatch[0].length,
+        consMatch ? consMatch.index! : review.length
+      )
+    : '';
+
+  const consSection = consMatch
+    ? review.substring(consMatch.index! + consMatch[0].length)
+    : '';
+
+  // Function to split text into paragraphs based on full stops but avoiding breaking sentences within addresses or abbreviations
+  const splitIntoParagraphs = (text: string) => {
+    const regex = /(?<!\b\w{1,2})\.\s+/g;
+    return text.split(regex).map((paragraph) => paragraph.trim() + '.');
+  };
 
   // Process the overview section if it exists
   if (overviewSection) {
-    // Remove any redundant "Overview:" header in the overview section
-    const cleanedOverview = overviewSection.replace(/^Overview:\s*/i, '').trim();
-
-    // Split the overview into paragraphs
-    const overviewParagraphs = cleanedOverview.split('. ').map(para => para.trim() + '.').filter(para => para.length > 1);
-
-    // Format the overview with paragraph breaks
-    formattedOverview = `<h2>Overview:</h2>${overviewParagraphs.map(para => `<p>${para}</p>`).join('')}`;
+    const cleanedOverview = overviewSection.replace(overviewRegex, '').trim();
+    const overviewParagraphs = splitIntoParagraphs(cleanedOverview).map(
+      (para) => `<p>${marked(para)}</p>`
+    ).join('');
+    formattedOverview = `<h2>Overview:</h2>${overviewParagraphs}`;
   }
 
   // Process the pros section if it exists
   if (prosSection) {
-    formattedPros = `<h3>Pros:</h3><ul>${prosSection.trim().split('-').map(pro => pro.trim() ? `<li>${pro.trim()}</li>` : '').join('')}</ul>`;
+    formattedPros = `<h3>Pros:</h3>${marked(prosSection.trim())}`;
   }
 
   // Process the cons section if it exists
   if (consSection) {
-    formattedCons = `<h3>Cons:</h3><ul>${consSection.trim().split('-').map(con => con.trim() ? `<li>${con.trim()}</li>` : '').join('')}</ul>`;
+    formattedCons = `<h3>Cons:</h3>${marked(consSection.trim())}`;
   }
 
   return `${formattedOverview}${formattedPros}${formattedCons}`;

@@ -12,6 +12,8 @@ import ServiceRequestForm from '@/components/custom/ServiceRequestForm';
 import Gallery from '@/components/custom/GalleryFrame';
 import ListingReview from '@/components/custom/ListingReview';
 import LoadingSpinner from '@/components/custom/LoadingSpinner';
+import { marked } from 'marked';
+
 
 interface Listing {
   id: number;
@@ -122,9 +124,16 @@ const SingleListing: React.FC = () => {
     return <p>Listing not found</p>;
   }
 
+  // Function to split text into paragraphs based on full stops
+  const splitIntoParagraphs = (text: string) => {
+    // Regular expression to match full stops followed by whitespace, but not within addresses or abbreviations
+    const regex = /(?<!\b\w{1,2})\.\s+/g;
+    return text.split(regex);
+  };
+
   // Split the description into paragraphs
-  const paragraphs = listing.description.split('. ').map((text, index) => (
-    <p key={index} className="mb-4">{text}.</p>
+  const paragraphs = splitIntoParagraphs(listing.description).map((text, index) => (
+    <p key={index} className="mb-4" dangerouslySetInnerHTML={{ __html: marked(text.trim() + '.') }}></p>
   ));
 
   return (
