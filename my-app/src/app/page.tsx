@@ -1,4 +1,3 @@
-import Image from "next/image";
 import NavBar from "@/components/custom/NavBar";
 import HeroBanner from "@/components/custom/HeroBanner";
 import FeaturedCommunities from "@/components/custom/FeaturedCommunities";

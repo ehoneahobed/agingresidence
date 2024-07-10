@@ -7,6 +7,7 @@ import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import LoadingSpinner from '@/components/custom/LoadingSpinner';
 import Pagination from '@/components/custom/Pagination';
+import Image from 'next/image';
 
 interface Listing {
   slug: string;
@@ -72,6 +73,8 @@ const SearchResultsPage: React.FC = () => {
     return <p>{error}</p>;
   }
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
   return (
     <div>
       <NavBar />
@@ -83,7 +86,14 @@ const SearchResultsPage: React.FC = () => {
               currentListings.map((listing) => (
                 <Link key={listing.slug} href={`/community/${listing.slug}`} passHref className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-md">
                   <div className="cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <img className="w-full h-48 object-cover" src={listing.image} alt={listing.name} />
+                    {/* <img className="w-full h-48 object-cover" src={listing.image} alt={listing.name} /> */}
+                    <Image
+                    src={`${baseUrl}${listing.image}`}
+                      width={500}
+                      height={400}
+                      alt={listing.name}
+                      objectFit='cover'
+                    />
                     <div className="p-6">
                       <h3 className="mt-2 text-xl font-semibold text-gray-900">{listing.name}</h3>
                       <p className="mt-3 text-gray-600">{listing.phone}</p>
