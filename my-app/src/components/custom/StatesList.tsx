@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import SkeletonStateCard from '../skeletons/skeletonStateCard';
 
 interface StateData {
   state: string;
@@ -32,27 +33,28 @@ const StatesList: React.FC = () => {
     fetchStateData();
   }, []);
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
   return (
     <section className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-extrabold text-gray-900 text-center">Explore by State</h2>
         <div className="mt-10 grid gap-6 lg:grid-cols-4 sm:grid-cols-2 grid-cols-1">
-          {statesData.map((state, index) => (
-            <Link key={index} href={`/states/${state.abbreviation.toLowerCase()}`} passHref className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-md">
-              <div className="flex justify-between items-center">
-                <span className="text-xl font-semibold text-gray-800">{state.state} ({state.abbreviation})</span>
-              </div>
-              <p className="mt-2 text-gray-600">{state.facilities} facilities</p>
-            </Link>
-          ))}
+          {loading ? (
+            // Display 8 skeleton cards while loading
+            [...Array(16)].map((_, index) => <SkeletonStateCard key={index} />)
+          ) : error ? (
+            <p className="text-red-500 text-lg text-center">{error}</p>
+          ) : statesData.length === 0 ? (
+            <p className="text-gray-600 text-lg text-center">No data available.</p>
+          ) : (
+            statesData.map((state, index) => (
+              <Link key={index} href={`/states/${state.abbreviation.toLowerCase()}`} passHref className="block p-4 bg-gray-100 hover:bg-gray-200 rounded-lg shadow-md">
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-semibold text-gray-800">{state.state} ({state.abbreviation})</span>
+                </div>
+                <p className="mt-2 text-gray-600">{state.facilities} facilities</p>
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </section>
