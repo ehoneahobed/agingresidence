@@ -59,6 +59,7 @@ const SingleListing: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [similarListings, setSimilarListings] = useState<SimilarListing[]>([]);
+  const [similarLoading, setSimilarLoading] = useState<boolean>(true);
   const [formSuccess, setFormSuccess] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -100,6 +101,8 @@ const SingleListing: React.FC = () => {
           setSimilarListings(data);
         } catch (error: any) {
           console.error(error.message);
+        } finally {
+          setSimilarLoading(false);
         }
       };
 
@@ -196,7 +199,6 @@ const SingleListing: React.FC = () => {
                 {paragraphs}
               </div>
               <ListingReview review={listing.review_generated} />
-              {/* <ImageGrid images={listing.gallery} altText={listing.name} /> */}
               {listing.gallery && listing.gallery.length > 0 && (
                 <div className="mt-8">
                   <h2 className="text-2xl font-extrabold text-gray-900 mb-4">Gallery</h2>
@@ -213,7 +215,7 @@ const SingleListing: React.FC = () => {
                 onSubmitSuccess={(message) => setFormSuccess(message)}
                 onSubmitError={(message) => setFormError(message)}
               />
-              <SimilarCommunities listings={similarListings} />
+              <SimilarCommunities listings={similarListings} loading={similarLoading} />
             </div>
           </div>
         </div>
