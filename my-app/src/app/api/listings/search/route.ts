@@ -17,40 +17,47 @@ export async function GET(req: NextRequest) {
   try {
     const filters: any[] = [];
 
-    if (query) {
+    if (query && query.trim()) {
       filters.push({
         OR: [
-          { name: { contains: query } },
-          { description: { contains: query} },
+          { name: { contains: query.trim() } },
+          { description: { contains: query.trim() } },
         ],
       });
     }
 
-    if (category) {
+    if (category && category.trim()) {
       filters.push({
         category: {
-          name: { contains: category },
+          name: { contains: category.trim() },
         },
       });
     }
 
-    if (location) {
+    if (location && location.trim()) {
       filters.push({
         location: {
-          address: { contains: location },
+          address: { contains: location.trim() },
         },
       });
     }
 
+    console.log('Filters applied:', JSON.stringify(filters, null, 2));
+
     const listings = await prisma.listing.findMany({
-      where: {
-        AND: filters,
-      },
+      where: filters.length > 0 ? { AND: filters } : {},
     });
+
+    console.log('Listings fetched:', listings);
+
+    if (listings.length === 0) {
+      console.log('No listings found');
+      return NextResponse.json({ message: 'No listings found' }, { status: 404 });
+    }
 
     return NextResponse.json(listings);
   } catch (error: any) {
-    console.error('Error fetching listings:', error);
-    return NextResponse.json({ error: 'Failed to fetch listings' }, { status: 500 });
+    console.error('Error fetching listings:', error.message);
+    return NextResponse.json({ error: 'Failed to fetch listings', details: error.message }, { status: 500 });
   }
 }
