@@ -3,6 +3,16 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+async function validateImage(url: string): Promise<boolean> {
+  try {
+    const res = await fetch(url, { method: 'HEAD' });
+    return res.ok;
+  } catch (error) {
+    console.error('Error validating image:', error);
+    return false;
+  }
+}
+
 export async function GET(req: NextRequest, { params }: { params: { slug: string } }) {
   const { slug } = params;
 
@@ -29,7 +39,22 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
       },
     });
 
-    return NextResponse.json(updatedListing);
+    // Validate images
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+    const gallery = updatedListing.gallery as string[];
+
+    const validImages = gallery && gallery.length > 0 ? await Promise.all(
+      gallery.map(async (image: string) => {
+        const imageUrl = `${baseUrl}${image}`;
+        const isValid = await validateImage(imageUrl);
+        return isValid ? image : null;
+      })
+    ).then(results => results.filter(Boolean) as string[]) : [];
+
+    return NextResponse.json({
+      ...updatedListing,
+      images: validImages,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

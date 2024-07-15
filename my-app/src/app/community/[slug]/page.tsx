@@ -11,9 +11,10 @@ import SimilarCommunities from '@/components/custom/SimilarCommunities';
 import ServiceRequestForm from '@/components/custom/ServiceRequestForm';
 import Gallery from '@/components/custom/GalleryFrame';
 import ListingReview from '@/components/custom/ListingReview';
-import LoadingSpinner from '@/components/custom/LoadingSpinner';
+import ImageGrid from '@/components/custom/ImageGrid';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { marked } from 'marked';
-
 
 interface Listing {
   id: number;
@@ -110,7 +111,30 @@ const SingleListing: React.FC = () => {
     return (
       <div>
         <NavBar />
-        <LoadingSpinner />
+        <main className="py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="lg:col-span-2">
+                <Skeleton height={256} />
+                <h1 className="text-3xl font-extrabold text-gray-900 mt-6"><Skeleton /></h1>
+                <div className="flex items-center mt-2">
+                  <p className="text-lg text-gray-600 mt-2"><Skeleton width={100} /></p>
+                </div>
+                <div className="flex flex-wrap items-center mt-2">
+                  <Skeleton width={100} height={20} count={3} />
+                </div>
+                <div className="prose prose-lg mt-4 text-gray-600 text-justify">
+                  <Skeleton count={5} />
+                </div>
+                <Skeleton height={256} />
+                <Skeleton height={256} />
+              </div>
+              <div>
+                <Skeleton height={400} />
+              </div>
+            </div>
+          </div>
+        </main>
         <Footer />
       </div>
     );
@@ -144,15 +168,7 @@ const SingleListing: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="relative w-full h-64">
-                <Image
-                  className="rounded-lg"
-                  src={`${baseUrl}${listing.image}`}
-                  alt={listing.name}
-                  layout="fill"
-                  objectFit="cover"
-                  quality={100}
-                />
-
+                <Gallery images={listing.gallery} altText={listing.name} />
               </div>
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
               <div className="flex items-center mt-2">
@@ -180,7 +196,13 @@ const SingleListing: React.FC = () => {
                 {paragraphs}
               </div>
               <ListingReview review={listing.review_generated} />
-              <Gallery images={listing.gallery} altText={listing.name} />
+              {/* <ImageGrid images={listing.gallery} altText={listing.name} /> */}
+              {listing.gallery && listing.gallery.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="text-2xl font-extrabold text-gray-900 mb-4">Gallery</h2>
+                  <ImageGrid images={listing.gallery} altText={listing.name} />
+                </div>
+              )}
               <ContactInformation phone={listing.phone} website={listing.website} address={listing.location.address} />
               <OperatingHours hours={listing.operatingHours} />
               <LocationMap latitude={listing.location.latitude} longitude={listing.location.longitude} name={listing.name} />
