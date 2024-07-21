@@ -83,9 +83,9 @@ const SearchResultsPage: React.FC = () => {
               ))}
             </div>
           ) : error ? (
-            <div className="mt-10 text-center text-red-600">
-              <h2 className="text-2xl font-semibold">Oops! Something went wrong.</h2>
-              <p className="mt-4">{error}</p>
+            <div className="mt-10 text-center">
+              <h2 className="text-2xl font-semibold">Oops! No listing found for your search.</h2>
+              <p className="mt-4">Try searching for something else</p>
               <Link href="/" className="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-600 transition-colors mt-4">
                 Go back to Home
               </Link>
