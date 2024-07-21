@@ -14,6 +14,12 @@ const nextConfig = {
         port: '',
         pathname: '/listing_images/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   async redirects() {

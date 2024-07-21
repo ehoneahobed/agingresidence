@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,113 +7,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Category {
-  id          Int                @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   name        String
-  slug        String             @unique
-  description String?            @db.Text
+  slug        String            @unique
+  description String?           @db.Text
   image       String?
   listings    CategoryListing[]
 }
 
 model CategoryListing {
-  id          Int       @id @default(autoincrement())
-  listingId   Int
-  categoryId  Int
-  listing     Listing   @relation(fields: [listingId], references: [id])
-  category    Category  @relation(fields: [categoryId], references: [id])
+  id         Int      @id @default(autoincrement())
+  listingId  Int
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  listing    Listing  @relation(fields: [listingId], references: [id])
+
   @@unique([listingId, categoryId])
+  @@index([categoryId], map: "CategoryListing_categoryId_fkey")
 }
 
-
-
 model Location {
-  id Int @id @default(autoincrement())
-  latitude Float
+  id        Int       @id @default(autoincrement())
+  latitude  Float
   longitude Float
-  address String?
-  listings Listing[]
+  address   String?
+  listings  Listing[]
 }
 
 model Author {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
+  id       Int       @id @default(autoincrement())
+  name     String
+  email    String    @unique
   password String
   listings Listing[]
-
 }
-
-
-// model Listing {
-//   id Int @id @default(autoincrement())
-//   slug          String    @unique
-//   name          String
-//   phone         String?
-//   views         Int       @default(0)
-//   state         String
-//   image         String
-//   gallery       Json
-//   description   String?   @db.Text
-//   rating        Float?
-//   website       String?
-//   operatingHours String?
-//   tags          Json
-//   category Category @relation(fields: [categoryId], references: [id])
-//   categoryId Int
-//   location Location @relation(fields: [locationId], references: [id])
-//   locationId Int
-//   author        Author    @relation(fields: [authorId], references: [id])
-//   authorId      Int
-//   serviceRequests ServiceRequest[]
-//   servicesOffered       Json
-//   reviews Review[]
-// }
 
 model Listing {
-  id              Int                @id @default(autoincrement())
-  slug            String             @unique
-  name            String
-  phone           String?
-  views           Int                @default(0)
-  state           String
-  image           String
-  gallery         Json
-  description     String?            @db.Text
-  rating          Float?
-  website         String?
-  operatingHours  String?            @db.Text
-  tags            Json
-  locationId      Int
-  authorId        Int
-  type_of_service Json
+  id               Int               @id @default(autoincrement())
+  slug             String            @unique
+  name             String
+  phone            String?
+  views            Int               @default(0)
+  state            String
+  image            String
+  gallery          Json
+  description      String?           @db.Text
+  rating           Float?
+  website          String?
+  operatingHours   String?           @db.Text
+  tags             Json
+  locationId       Int
+  authorId         Int
+  type_of_service  Json
   review_generated String?           @db.Text
-  similar_places  Json
-  status          String             @default("draft")
-  categoryListing CategoryListing[]
-  location        Location           @relation(fields: [locationId], references: [id])
-  author          Author             @relation(fields: [authorId], references: [id])
-  serviceRequests ServiceRequest[]
-  reviews         Review[]
+  similar_places   Json
+  status           String            @default("draft")
+  data_id          String?           @db.VarChar(255)
+  google_reviews   Json?
+  categoryListing  CategoryListing[]
+  author           Author            @relation(fields: [authorId], references: [id])
+  location         Location          @relation(fields: [locationId], references: [id])
+  reviews          Review[]
+  serviceRequests  ServiceRequest[]
+
+  @@index([authorId], map: "Listing_authorId_fkey")
+  @@index([locationId], map: "Listing_locationId_fkey")
 }
 
-
-
-
 model ServiceRequest {
-  id             Int      @id @default(autoincrement())
-  fullName       String
-  email          String
-  zipCode        String
-  phone          String?
-  careNeeded     String?
+  id                 Int       @id @default(autoincrement())
+  fullName           String
+  email              String
+  zipCode            String
+  phone              String?
+  careNeeded         String?
   relationToResident String?
-  moveInDate     DateTime?
-  budget         String?
-  listingId      Int
-  listing        Listing  @relation(fields: [listingId], references: [id])
-  createdAt      DateTime @default(now())
+  moveInDate         DateTime?
+  budget             String?
+  listingId          Int
+  createdAt          DateTime  @default(now())
+  listing            Listing   @relation(fields: [listingId], references: [id])
+
+  @@index([listingId], map: "ServiceRequest_listingId_fkey")
 }
 
 model Newsletter {
@@ -128,11 +98,37 @@ model Newsletter {
   createdAt DateTime @default(now())
 }
 
-
 model Review {
-  id Int @id @default(autoincrement())
-  text String
-  rating Float
+  id        Int     @id @default(autoincrement())
+  text      String
+  rating    Float
   listingId Int
-  listing Listing @relation(fields: [listingId], references: [id])
+  listing   Listing @relation(fields: [listingId], references: [id])
+
+  @@index([listingId], map: "Review_listingId_fkey")
+}
+
+model Listing_old {
+  id               Int     @id @default(autoincrement())
+  slug             String  @unique(map: "Listing_slug_key")
+  name             String
+  phone            String?
+  views            Int     @default(0)
+  state            String
+  image            String
+  gallery          Json
+  description      String? @db.Text
+  rating           Float?
+  website          String?
+  operatingHours   String? @db.Text
+  tags             Json
+  locationId       Int
+  authorId         Int
+  type_of_service  Json
+  review_generated String? @db.Text
+  similar_places   Json
+  status           String  @default("draft")
+
+  @@index([authorId], map: "Listing_authorId_fkey")
+  @@index([locationId], map: "Listing_locationId_fkey")
 }

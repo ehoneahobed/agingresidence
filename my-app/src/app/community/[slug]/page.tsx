@@ -15,6 +15,7 @@ import ImageGrid from '@/components/custom/ImageGrid';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { marked } from 'marked';
+import ReviewsCarousel from '@/components/custom/ReviewsCarousel';
 
 interface Listing {
   id: number;
@@ -32,6 +33,7 @@ interface Listing {
   operatingHours: { [key: string]: string }[];
   tags: string[];
   review_generated: string;
+  google_reviews: Review[];
   location: {
     latitude: number;
     longitude: number;
@@ -48,6 +50,18 @@ interface SimilarListing {
   location: {
     address: string;
   };
+}
+
+interface Review {
+  link: string;
+  rating: number;
+  date: string;
+  user: {
+    name: string;
+    link: string;
+    thumbnail: string;
+  };
+  snippet: string;
 }
 
 const SingleListing: React.FC = () => {
@@ -208,6 +222,9 @@ const SingleListing: React.FC = () => {
               <ContactInformation phone={listing.phone} website={listing.website} address={listing.location.address} />
               <OperatingHours hours={listing.operatingHours} />
               <LocationMap latitude={listing.location.latitude} longitude={listing.location.longitude} name={listing.name} />
+              <div className='mt-8'>
+                {listing.google_reviews && <ReviewsCarousel reviews={listing.google_reviews} listingName={listing.name} />}
+              </div>
             </div>
             <div>
               <ServiceRequestForm
