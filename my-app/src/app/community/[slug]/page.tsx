@@ -65,7 +65,7 @@ interface Review {
 }
 
 const SingleListing: React.FC = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const DEFAULT_IMAGE = `/listing_images/default_image.jpg`;
 
   const { slug } = useParams();
   const router = useRouter();
@@ -185,7 +185,7 @@ const SingleListing: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2">
               <div className="relative w-full h-64">
-                <Gallery images={listing.gallery} altText={listing.name} />
+                <Gallery images={listing.gallery.length > 0 ? listing.gallery : [DEFAULT_IMAGE]} altText={listing.name} />
               </div>
               <h1 className="text-3xl font-extrabold text-gray-900 mt-6">{listing.name}</h1>
               <div className="flex items-center mt-2">

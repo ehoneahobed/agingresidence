@@ -5,7 +5,8 @@ import NavBar from '@/components/custom/NavBar';
 import Footer from '@/components/custom/Footer';
 import Link from 'next/link';
 import Image from 'next/image';
-import LoadingSpinner from '@/components/custom/LoadingSpinner';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface Category {
   id: number;
@@ -39,18 +40,6 @@ const CategoriesPage = () => {
     fetchCategories();
   }, []);
 
-  if (loading) {
-    return (
-      <div>
-        <NavBar />
-        <LoadingSpinner />
-        <Footer />
-      </div>
-    );
-  }
-
-  if (error) return <p>{error}</p>;
-
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const constructImageUrl = (path: string | null) => {
@@ -66,6 +55,39 @@ const CategoriesPage = () => {
       return `${baseUrl}/${path}`;
     }
   };
+
+  if (loading) {
+    return (
+      <div>
+        <NavBar />
+        <main className="py-12 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-8">
+              <Skeleton width={300} />
+            </h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {Array.from({ length: 6 }).map((_, index) => (
+                <div key={index} className="cursor-pointer bg-white p-6 rounded-lg shadow-md">
+                  <div className="relative w-full h-40">
+                    <Skeleton height="100%" />
+                  </div>
+                  <h2 className="text-2xl font-bold text-gray-900 mt-4">
+                    <Skeleton width={200} />
+                  </h2>
+                  <p className="mt-2 text-gray-600">
+                    <Skeleton count={3} />
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
