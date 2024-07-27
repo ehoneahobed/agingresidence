@@ -7,105 +7,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Author {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+
+   listings Listing[]
+}
+
 model Category {
-  id          Int               @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   name        String
-  slug        String            @unique
-  description String?           @db.Text
+  slug        String  @unique
+  description String? @db.Text
   image       String?
+
   listings    CategoryListing[]
 }
 
 model CategoryListing {
-  id         Int      @id @default(autoincrement())
+  id         Int @id @default(autoincrement())
   listingId  Int
   categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
-  listing    Listing  @relation(fields: [listingId], references: [id])
+
+  listing     Listing   @relation(fields: [listingId], references: [id])
+  category    Category  @relation(fields: [categoryId], references: [id])
 
   @@unique([listingId, categoryId])
   @@index([categoryId], map: "CategoryListing_categoryId_fkey")
 }
 
-model Location {
-  id        Int       @id @default(autoincrement())
-  latitude  Float
-  longitude Float
-  address   String?
-  listings  Listing[]
-}
-
-model Author {
-  id       Int       @id @default(autoincrement())
-  name     String
-  email    String    @unique
-  password String
-  listings Listing[]
-}
-
 model Listing {
-  id               Int               @id @default(autoincrement())
-  slug             String            @unique
+  id               Int     @id @default(autoincrement())
+  slug             String  @unique
   name             String
   phone            String?
-  views            Int               @default(0)
+  views            Int     @default(0)
   state            String
   image            String
   gallery          Json
-  description      String?           @db.Text
+  description      String? @db.Text
   rating           Float?
   website          String?
-  operatingHours   String?           @db.Text
+  operatingHours   String? @db.Text
   tags             Json
   locationId       Int
   authorId         Int
   type_of_service  Json
-  review_generated String?           @db.Text
+  review_generated String? @db.Text
   similar_places   Json
-  status           String            @default("draft")
-  data_id          String?           @db.VarChar(255)
+  status           String  @default("draft")
+  data_id          String? @db.VarChar(255)
   google_reviews   Json?
-  categoryListing  CategoryListing[]
-  author           Author            @relation(fields: [authorId], references: [id])
-  location         Location          @relation(fields: [locationId], references: [id])
-  reviews          Review[]
-  serviceRequests  ServiceRequest[]
 
   @@index([authorId], map: "Listing_authorId_fkey")
   @@index([locationId], map: "Listing_locationId_fkey")
-}
 
-model ServiceRequest {
-  id                 Int       @id @default(autoincrement())
-  fullName           String
-  email              String
-  zipCode            String
-  phone              String?
-  careNeeded         String?
-  relationToResident String?
-  moveInDate         DateTime?
-  budget             String?
-  listingId          Int
-  createdAt          DateTime  @default(now())
-  listing            Listing   @relation(fields: [listingId], references: [id])
-
-  @@index([listingId], map: "ServiceRequest_listingId_fkey")
-}
-
-model Newsletter {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  createdAt DateTime @default(now())
-}
-
-model Review {
-  id        Int     @id @default(autoincrement())
-  text      String
-  rating    Float
-  listingId Int
-  listing   Listing @relation(fields: [listingId], references: [id])
-
-  @@index([listingId], map: "Review_listingId_fkey")
+  Review          Review[]
+  categoryListing CategoryListing[]
+  serviceRequests ServiceRequest[]
+  location        Location           @relation(fields: [locationId], references: [id])
+  author          Author             @relation(fields: [authorId], references: [id])
 }
 
 model Listing_old {
@@ -131,4 +94,57 @@ model Listing_old {
 
   @@index([authorId], map: "Listing_authorId_fkey")
   @@index([locationId], map: "Listing_locationId_fkey")
+}
+
+model Location {
+  id        Int     @id @default(autoincrement())
+  latitude  Float
+  longitude Float
+  address   String?
+  listings Listing[]
+}
+
+model Newsletter {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id                Int      @id @default(autoincrement())
+  text              String   @db.Text
+  rating            Float
+  reviewerName      String
+  reviewerEmail     String
+  relationship      String
+  careType          String
+  foodRating        Float?
+  activitiesRating  Float?
+  staffRating       Float?
+  facilityRating    Float?
+  valueRating       Float?
+  approved          Boolean  @default(false)
+  listingId         Int
+  createdAt         DateTime @default(now())
+  listing           Listing  @relation(fields: [listingId], references: [id])
+
+  @@index([listingId], map: "Review_listingId_fkey")
+}
+
+model ServiceRequest {
+  id                 Int       @id @default(autoincrement())
+  fullName           String
+  email              String
+  zipCode            String
+  phone              String?
+  careNeeded         String?
+  relationToResident String?
+  moveInDate         DateTime?
+  budget             String?
+  listingId          Int
+  createdAt          DateTime  @default(now())
+
+  listing        Listing  @relation(fields: [listingId], references: [id])
+
+  @@index([listingId], map: "ServiceRequest_listingId_fkey")
 }

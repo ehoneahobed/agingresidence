@@ -20,10 +20,10 @@ export async function GET(req: NextRequest, { params }: { params: { slug: string
     // Find the listing by slug
     const listing = await prisma.listing.findUnique({
       where: { slug },
-      include: {
-        location: true,
-        author: true,
-      },
+      // include: {
+      //   location: true,
+      //   author: true,
+      // },
     });
     if (!listing) {
       return NextResponse.json({ message: 'Listing not found' }, { status: 404 });

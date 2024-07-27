@@ -99,9 +99,9 @@ const ReviewsCarousel: React.FC<ReviewsCarouselProps> = ({ reviews, listingName 
   return (
     <div className="reviews-carousel relative">
       <div className="mb-4">
-        <h2 className="text-2xl font-bold text-gray-900">Reviews</h2>
-        <p className="text-gray-600">Total Reviews: {totalReviews}</p>
-        <p className="text-gray-600">Average Rating: {averageRating} / 5</p>
+        <h2 className="text-2xl font-bold text-gray-900">Reviews From Google</h2>
+        <p className="text-gray-600"><span className='font-bold'>Total Reviews:</span> {totalReviews}</p>
+        <p className="text-gray-600 "><span className='font-bold'>Average Rating:</span> {averageRating} / 5</p>
       </div>
       <Carousel
         responsive={responsive}
