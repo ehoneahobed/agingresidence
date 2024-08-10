@@ -3,6 +3,14 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
 
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton
+} from '@clerk/nextjs'
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -16,6 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkProvider>
     <html lang="en">
     <head>
 <Script async src="https://www.googletagmanager.com/gtag/js?id=G-XC4HV01N8M"></Script>
@@ -28,7 +37,16 @@ export default function RootLayout({
   `}
 </Script>
     </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+      {/* <SignedOut>
+          <SignInButton />
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn> */}
+        {children}
+      </body>
     </html>
+    </ClerkProvider>
   );
 }

@@ -12,8 +12,10 @@ model Author {
   name     String
   email    String @unique
   password String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 
-   listings Listing[]
+  listings Listing[]
 }
 
 model Category {
@@ -22,6 +24,8 @@ model Category {
   slug        String  @unique
   description String? @db.Text
   image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 
   listings    CategoryListing[]
 }
@@ -30,6 +34,8 @@ model CategoryListing {
   id         Int @id @default(autoincrement())
   listingId  Int
   categoryId Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 
   listing     Listing   @relation(fields: [listingId], references: [id])
   category    Category  @relation(fields: [categoryId], references: [id])
@@ -60,6 +66,9 @@ model Listing {
   status           String  @default("draft")
   data_id          String? @db.VarChar(255)
   google_reviews   Json?
+  organizationId Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 
   @@index([authorId], map: "Listing_authorId_fkey")
   @@index([locationId], map: "Listing_locationId_fkey")
@@ -67,6 +76,10 @@ model Listing {
   Review          Review[]
   categoryListing CategoryListing[]
   serviceRequests ServiceRequest[]
+  claims      Claim[]
+
+
+  organization   Organization?   @relation(fields: [organizationId], references: [id])
   location        Location           @relation(fields: [locationId], references: [id])
   author          Author             @relation(fields: [authorId], references: [id])
 }
@@ -102,12 +115,15 @@ model Location {
   longitude Float
   address   String?
   listings Listing[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
 model Newsletter {
   id        Int      @id @default(autoincrement())
   email     String   @unique
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
 model Review {
@@ -125,7 +141,11 @@ model Review {
   valueRating       Float?
   approved          Boolean  @default(false)
   listingId         Int
-  createdAt         DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  responses         ReviewResponse[]
+
   listing           Listing  @relation(fields: [listingId], references: [id])
 
   @@index([listingId], map: "Review_listingId_fkey")
@@ -142,9 +162,74 @@ model ServiceRequest {
   moveInDate         DateTime?
   budget             String?
   listingId          Int
-  createdAt          DateTime  @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   listing        Listing  @relation(fields: [listingId], references: [id])
 
   @@index([listingId], map: "ServiceRequest_listingId_fkey")
+}
+
+
+model Claim {
+  id          Int      @id @default(autoincrement())
+  listingId   Int
+  userId      Int
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  listing     Listing  @relation(fields: [listingId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+
+model User {
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  password       String?
+  name           String
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  organizationId Int?
+  clerkId   String @unique
+  organization   Organization?  @relation(fields: [organizationId], references: [id])
+  claims         Claim[]
+  roles          UserRole[]
+  reviewResponses ReviewResponse[]
+}
+
+model Organization {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  listings  Listing[]
+  users     User[]
+  roles     UserRole[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model UserRole {
+  id             Int            @id @default(autoincrement())
+  userId         Int
+  organizationId Int
+  role           String         // e.g., "admin", "manager"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user           User           @relation(fields: [userId], references: [id])
+  organization   Organization   @relation(fields: [organizationId], references: [id])
+}
+
+model ReviewResponse {
+  id          Int      @id @default(autoincrement())
+  reviewId    Int
+  userId      Int
+  response    String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  review      Review   @relation(fields: [reviewId], references: [id])
+  user        User     @relation(fields: [userId], references: [id])
 }
